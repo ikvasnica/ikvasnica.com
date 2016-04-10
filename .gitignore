@@ -1,0 +1,5 @@
+# Excludes Bootstrap files
+**/bootstrap*.*
+
+# Excludes Bootstrap's fonts
+fonts/
