@@ -61,11 +61,18 @@ header span {
 }
 
 .thumbnail {
+	position: relative;
 	min-height: 530px;
 }
 
 .thumbnail p {
 	text-align: justify;
+}
+
+.thumbnail-buttons {
+	position: absolute;
+	bottom: 0;
+	left: 15px;
 }
 
 .sidenote {
@@ -110,5 +117,11 @@ header span {
 
 	.thumbnail {
 		min-height: 0;
+	}
+
+	.thumbnail-buttons {
+		position: relative;
+		left: auto;
+		bottom: auto;
 	}
 }
