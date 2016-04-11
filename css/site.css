@@ -3,6 +3,7 @@ body, .container, .container-fluid, .jumbotron {
 	font-family: Helvetica, Arial, sans-serif;
 }
 
+
 a {
 	color: #1D87AB;
 	text-decoration: underline;
@@ -13,9 +14,12 @@ a:hover {
 	text-decoration: none;
 }
 
+a[role='button'] {
+	text-decoration: none;
+}
+
 #trial-btn {
 	font-size: 2em;
-	text-decoration: none;
 }
 
 .vertical-center {
@@ -34,6 +38,10 @@ a:hover {
 	margin-top: 50px;
 }
 
+.top-spacing-small {
+	margin-top: 15px;
+}
+
 .links-row {
 	font-style: italic;
 	margin-top: 30px;
@@ -49,14 +57,58 @@ header span {
 
 .colorful {
 	background-color: #2B6FA6;
+	color: #F0F1F2;
 }
 
+.thumbnail {
+	min-height: 530px;
+}
+
+.thumbnail p {
+	text-align: justify;
+}
+
+.sidenote {
+	font-size: 0.8em;
+	font-style: italic;
+	color: gray;
+}
+
+.no-opacity {
+	opacity: 0;
+	left: +200px;
+}
+
+.no-show {
+	display: none;
+}
+
+/* No JavaScript CSS */
+.no-js .no-show {
+	display: block;
+}
+
+.no-js .no-opacity {
+	opacity: 1;
+	left: 0px;
+}
+
+
+/* Mobile devices */
 @media (max-width: 600px) {
 	#jumbotron-picture {
-		display: none;
+		display: none !important;
 	}
 
 	#headings {
 		text-align: center;
+	}
+
+	.links-row {
+		display: none;
+	}
+
+	.thumbnail {
+		min-height: 0;
 	}
 }
