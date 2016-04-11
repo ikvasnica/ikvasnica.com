@@ -28,10 +28,8 @@ a[role='button'] {
     float: none;
 }
 
-#jumbotron-picture {
-	border: 1px gray solid;
-	border-radius: 50px;
-	width: 150px;
+#heading-row {
+	min-height: 180px;
 }
 
 .top-spacing {
@@ -102,17 +100,9 @@ header span {
 
 
 /* Mobile devices */
-@media (max-width: 600px) {
-	#jumbotron-picture {
-		display: none !important;
-	}
-
+@media (max-width: 767px) {
 	#headings {
 		text-align: center;
-	}
-
-	.links-row {
-		display: none;
 	}
 
 	.thumbnail {
@@ -123,5 +113,9 @@ header span {
 		position: relative;
 		left: auto;
 		bottom: auto;
+	}
+
+	#heading-row {
+		min-height: 0;
 	}
 }

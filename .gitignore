@@ -4,3 +4,6 @@
 # Excludes images and fonts
 fonts/
 img/
+
+# Excludes third-party plugins
+js/jquery.onscreen.min.js
