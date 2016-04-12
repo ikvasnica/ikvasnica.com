@@ -88,17 +88,34 @@ header span {
 	margin-right: 10px;
 }
 
-.colorful {
+#projects {
+	min-height: 600px;
+}
+
+.colorful, .colorful p, .colorful h3 {
 	background-color: #2B6FA6;
 	color: #F0F1F2;
 }
 
 .thumbnail {
 	position: relative;
-	min-height: 600px;
+	min-height: 400px;
+	border: 0;
 }
 
-.standard, .standard p {
+.thumbnail .caption {
+	position: absolute;
+	left: 0;
+	top: -20px;
+}
+
+.colorful span {
+	background-color: #F0F1F2;
+	color: #2B6FA6;
+	font-weight: bold;
+}
+
+.standard, .standard p, .standard h3 {
 	line-height: 200%;
 	text-align: justify;
 }
@@ -107,6 +124,7 @@ header span {
 	position: absolute;
 	bottom: 0;
 	left: 15px;
+	margin-bottom: 30px;
 }
 
 .sidenote {
@@ -132,6 +150,18 @@ header span {
 	opacity: 1;
 }
 
+.no-js .thumbnail .caption {
+	position: relative;
+	min-height: 420px;
+}
+
+.no-js .thumbnail-buttons {
+	position: absolute;
+	bottom: 0;
+	left: 15px;
+	margin-bottom: 30px;
+}
+
 
 /* Mobile devices */
 @media (max-width: 767px) {
@@ -151,5 +181,18 @@ header span {
 
 	#heading-row {
 		min-height: 0;
+	}
+
+	#projects {
+		min-height: 0;
+	}
+
+	#projects .caption {
+		display: block;
+		opacity: 1;
+	}
+
+	.thumbnail .caption {
+		position: relative;
 	}
 }

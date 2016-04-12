@@ -23,7 +23,7 @@ $(function () {
 	   container: window,
 	   direction: 'vertical',
 	   doIn: function() {
-
+	   		console.log('fired');
 	   		var delay = 500;
 
 	   		setTimeout(function() {
@@ -33,6 +33,35 @@ $(function () {
 	   },
 	   tolerance: 300,
 	   throttle: 50
+	})
+	// projects thumbnails effects
+				.on ('mouseenter', '.thumbnail-picture', function() {
+		if (isSmallScreen()) { return; }
+
+		$(this).slideUp(300, function() {
+			$(this).siblings('.caption').show().animate({opacity: 1});
+			$(this).siblings('.thumbnail-buttons').show().animate({opacity: 1});
+		});
+	})
+				.on('mouseleave', '.thumbnail', function() {
+		if (isSmallScreen()) { return; }
+
+		$(this).children('.caption').animate({opacity: 0}, function() {
+			$(this).siblings('.thumbnail-picture').slideDown(300);
+			$(this).siblings('.thumbnail-buttons').hide().css('opacity', 0);
+			$(this).hide();
+		});
+	});
+
+	// resets visibility when window resizing
+	$(window).resize(function () {
+		if (isSmallScreen()) {
+			$('.thumbnail-buttons').show().css('opacity', 1);
+			$('.caption').show().css('opacity', 1);
+		} else {
+			$('.thumbnail-buttons').hide().css('opacity', 0);
+			$('.caption').hide().css('opacity', 0);
+		}
 	});
 
 
