@@ -1,8 +1,20 @@
 body, .container, .container-fluid, .jumbotron {
 	background-color: #F0F1F2;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Georgia, Arial, sans-serif;
 }
 
+.wrapper {
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3 {
+	font-family: Helvetica Neue, Arial, sans-serif;
+}
+
+section {
+	padding: 35px 0 35px 0;
+}
 
 a {
 	color: #1D87AB;
@@ -26,6 +38,18 @@ a[role='button'] {
     display: inline-block;
     vertical-align: middle;
     float: none;
+}
+
+#jumbotron-picture {
+	width: 146px;
+	height: 135px;
+	opacity: 0.9;
+	background: url(../img/jumbotron.jpg);
+	margin: 0 auto;
+}
+
+#jumbotron-picture:hover {
+	background: url(../img/jumbotron_hover.jpg);
 }
 
 #heading-row {
@@ -56,6 +80,14 @@ header span {
 	color: #2B6FA6;
 }
 
+#features p {
+    font-size: 1.5em;
+}
+
+#features span {
+	margin-right: 10px;
+}
+
 .colorful {
 	background-color: #2B6FA6;
 	color: #F0F1F2;
@@ -63,10 +95,11 @@ header span {
 
 .thumbnail {
 	position: relative;
-	min-height: 530px;
+	min-height: 600px;
 }
 
-.thumbnail p {
+.standard, .standard p {
+	line-height: 200%;
 	text-align: justify;
 }
 
