@@ -81,7 +81,6 @@ header span {
 
 .no-opacity {
 	opacity: 0;
-	left: +200px;
 }
 
 .no-show {
@@ -95,7 +94,6 @@ header span {
 
 .no-js .no-opacity {
 	opacity: 1;
-	left: 0px;
 }
 
 
