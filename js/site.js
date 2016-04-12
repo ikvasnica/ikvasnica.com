@@ -31,12 +31,8 @@ $(function () {
 	   		}, delay);
 
 	   },
-	   tolerance: 50,
-	   throttle: 50,
-	   toggleClass: 'onScreen',
-	   lazyAttr: null,
-	   lazyPlaceholder: 'someImage.jpg',
-	   debug: false
+	   tolerance: 300,
+	   throttle: 50
 	});
 
 

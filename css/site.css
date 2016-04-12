@@ -40,13 +40,16 @@ a[role='button'] {
 	margin-top: 15px;
 }
 
-.links-row {
-	font-style: italic;
-	margin-top: 30px;
-}
-
 .links-row a {
 	margin-left: 15px;
+}
+
+header .row {
+	margin-bottom: 20px;
+}
+
+.links-row {
+	font-style: italic;
 }
 
 header span {
