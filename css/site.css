@@ -12,7 +12,7 @@ h1, h2, h3 {
 	font-family: Helvetica Neue, Arial, sans-serif;
 }
 
-section {
+section, footer {
 	padding: 35px 0 35px 0;
 }
 
@@ -62,6 +62,10 @@ a[role='button'] {
 
 .top-spacing-small {
 	margin-top: 15px;
+}
+
+.bottom-spacing {
+	margin-bottom: 50px;
 }
 
 .links-row a {
@@ -148,6 +152,11 @@ header span {
 	text-align: justify;
 }
 
+#contact p, #contact h3 {
+	text-align: center;
+	font-size: 1.6em;
+}
+
 .thumbnail-buttons {
 	position: absolute;
 	bottom: 0;
@@ -159,6 +168,14 @@ header span {
 	font-size: 0.8em;
 	font-style: italic;
 	color: gray;
+}
+
+.social-link {
+	margin-right: 30px;
+}
+
+.social-link:last-of-type {
+	margin-right: 0;
 }
 
 .no-opacity {
@@ -226,5 +243,13 @@ header span {
 
 	.quotation {
 		margin-top: 30px;
+	}
+
+	.social-link {
+		margin-right: 5px;
+	}
+
+	.social-link:last-of-type {
+		margin-right: 0;
 	}
 }

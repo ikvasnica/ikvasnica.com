@@ -6,6 +6,7 @@ $(function () {
 	// jQuery objects cache
 	var trialButton = $("#trial-btn");
 	var projectThumbnails = $('.thumbnail');
+	var socialIcons = $('.social-link');
 
 	// tooltip plugin
 	$('[data-toggle="tooltip"]').tooltip();
@@ -23,7 +24,6 @@ $(function () {
 	   container: window,
 	   direction: 'vertical',
 	   doIn: function() {
-	   		console.log('fired');
 	   		var delay = 500;
 
 	   		setTimeout(function() {
@@ -52,6 +52,22 @@ $(function () {
 			$(this).hide();
 		});
 	});
+
+	// lazy loading - social icons
+	$('#contact').onScreen({
+	   container: window,
+	   direction: 'vertical',
+	   doIn: function() {
+	   		var delay = 300;
+
+	   		setTimeout(function() {
+	   			setEachAnimation(delay, 1, socialIcons);
+	   		}, delay);
+
+	   },
+	   tolerance: 150,
+	   throttle: 50
+	})
 
 	// resets visibility when window resizing
 	$(window).resize(function () {
