@@ -13,7 +13,7 @@ h1, h2, h3 {
 }
 
 section, footer {
-	padding: 35px 0 35px 0;
+	padding: 35px 0 50px 0;
 }
 
 a {
@@ -65,7 +65,7 @@ a[role='button'] {
 }
 
 .bottom-spacing {
-	margin-bottom: 90px;
+	margin-bottom: 100px;
 }
 
 .links-row a {
@@ -129,6 +129,16 @@ header span {
 	border-bottom: 1px solid;
 }
 
+#contact p {
+	font-size: 1.6em;
+	padding-left: 15px;
+}
+
+#contact span {
+	margin-right: 60px;
+	padding-left: 30px;
+}
+
 .thumbnail {
 	position: relative;
 	min-height: 400px;
@@ -147,14 +157,9 @@ header span {
 	font-weight: bold;
 }
 
-.standard, .standard p, .standard h3 {
+.standard, .standard p {
 	line-height: 200%;
 	text-align: justify;
-}
-
-#contact p, #contact h3 {
-	text-align: center;
-	font-size: 1.6em;
 }
 
 .thumbnail-buttons {
@@ -251,5 +256,23 @@ header span {
 
 	.social-link:last-of-type {
 		margin-right: 0;
+	}
+
+	#contact span {
+		margin-right: 5px;
+		padding-left: 0;
+	}
+
+	#contact p {
+		font-size: 1.1em;
+		padding-left: 30px;
+	}
+
+	#features p, #references p {
+		font-size: 1.1em;
+	}
+
+	h2 {
+		font-size: 22px;
 	}
 }
