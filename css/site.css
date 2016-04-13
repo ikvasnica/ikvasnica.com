@@ -17,12 +17,12 @@ section, footer {
 }
 
 a {
-	color: #1D87AB;
+	color: #7722A8;
 	text-decoration: underline;
 }
 
 a:hover {
-	color: #1D87AB;
+	color: #7722A8;
 	text-decoration: none;
 }
 
@@ -31,7 +31,12 @@ a[role='button'] {
 }
 
 #trial-btn {
+	background-color: #7722A8;
 	font-size: 2em;
+}
+
+#trial-btn:hover {
+	background-color: #4A0975;
 }
 
 .vertical-center {
@@ -81,7 +86,7 @@ header .row {
 }
 
 header span {
-	color: #2B6FA6;
+	color: #7722A8;
 }
 
 #features span {
@@ -93,7 +98,7 @@ header span {
 }
 
 .colorful, .colorful p, .colorful h3 {
-	background-color: #2B6FA6;
+	background-color: #4A0975;
 	color: #F0F1F2;
 }
 
@@ -153,7 +158,7 @@ header span {
 
 #projects span {
 	background-color: #F0F1F2;
-	color: #2B6FA6;
+	color: #4A0975;
 	font-weight: bold;
 }
 
@@ -181,6 +186,10 @@ header span {
 
 .social-link:last-of-type {
 	margin-right: 0;
+}
+
+#contactButton {
+	padding: 20px 50px;
 }
 
 .no-opacity {
