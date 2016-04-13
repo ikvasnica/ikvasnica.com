@@ -199,6 +199,14 @@ header span {
 	font-size: 1.5em;
 }
 
+.right-padding {
+	padding-right: 30px;
+}
+
+.left-padding {
+	padding-left: 30px;
+}
+
 /* No JavaScript CSS */
 .no-js .no-show {
 	display: block;
@@ -223,10 +231,6 @@ header span {
 
 /* Mobile devices */
 @media (max-width: 767px) {
-	#headings {
-		text-align: center;
-	}
-
 	.thumbnail {
 		min-height: 0;
 	}
@@ -283,4 +287,14 @@ header span {
 	h2 {
 		font-size: 22px;
 	}
+
+	.right-padding, .left-padding {
+		padding: 0 10px 0 10px;
+	}
 }
+
+
+@media (max-width: 991px) {
+	#headings {
+		text-align: center;
+	}
