@@ -80,10 +80,6 @@ header span {
 	color: #2B6FA6;
 }
 
-#features p {
-    font-size: 1.5em;
-}
-
 #features span {
 	margin-right: 10px;
 }
@@ -95,6 +91,38 @@ header span {
 .colorful, .colorful p, .colorful h3 {
 	background-color: #2B6FA6;
 	color: #F0F1F2;
+}
+
+#features p, #references p {
+	font-size: 1.2em;
+}
+
+.media-object {
+	border: 1px #F0F1F2 solid;
+}
+
+.quotation {
+	font-style: italic;
+	text-align: justify;
+}
+
+.quotation:before, .quotation:after {
+	content: '"';
+}
+
+.signature {
+	text-align: right;
+	margin-top: 15px;
+}
+
+#references span {
+	text-decoration-style: dashed;
+	border-bottom: 1px dotted;
+}
+
+#references span:hover {
+	cursor: default;
+	border-bottom: 1px solid;
 }
 
 .thumbnail {
@@ -109,7 +137,7 @@ header span {
 	top: -20px;
 }
 
-.colorful span {
+#projects span {
 	background-color: #F0F1F2;
 	color: #2B6FA6;
 	font-weight: bold;
@@ -194,5 +222,9 @@ header span {
 
 	.thumbnail .caption {
 		position: relative;
+	}
+
+	.quotation {
+		margin-top: 30px;
 	}
 }
