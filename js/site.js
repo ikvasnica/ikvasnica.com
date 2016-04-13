@@ -124,7 +124,7 @@ $(function () {
 
 
 	function isSmallScreen() {
-		if ($(window).width() < 600) { return true; } else { return false; }
+		if ($(window).width() < 768) { return true; } else { return false; }
 	}
 
 	function updateContactButtonPosition() {
