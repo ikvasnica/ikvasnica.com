@@ -4,10 +4,14 @@ $(function () {
 	$("body").removeClass("no-js");
 
 	// jQuery objects cache
-	var trialButton = $("#trial-btn");
+	var contactButton = $('#contactButton');
 	var projectThumbnails = $('.thumbnail');
 	var socialIcons = $('.social-link');
 
+	var defaultDelay = 500;
+
+	updateContactButtonPosition();
+	
 	// tooltip plugin
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -18,6 +22,22 @@ $(function () {
 			left: "-=200px"
 		}, 2000);
 	});
+
+	// contact button handler
+	$('.jumbotron').onScreen({
+	   container: window,
+	   direction: 'vertical',
+	   doIn: function() {
+
+	   		contactButton.slideUp(defaultDelay);
+
+	   },
+	   doOut: function() {
+	   	contactButton.slideDown(defaultDelay);
+	   },
+	   tolerance: 50,
+	   throttle: 50
+	})
 
 	// lazy loading - projects thumbnails
 	$('#projects').onScreen({
@@ -64,6 +84,11 @@ $(function () {
 	   			setEachAnimation(delay, 1, socialIcons);
 	   		}, delay);
 
+	   		contactButton.slideUp(defaultDelay);
+
+	   },
+	   doOut: function() {
+	   		contactButton.slideDown(defaultDelay);
 	   },
 	   tolerance: 150,
 	   throttle: 50
@@ -92,11 +117,18 @@ $(function () {
 			$('.thumbnail-buttons').hide().css('opacity', 0);
 			$('.caption').hide().css('opacity', 0);
 		}
+
+		updateContactButtonPosition();
 	});
+
 
 
 	function isSmallScreen() {
 		if ($(window).width() < 600) { return true; } else { return false; }
+	}
+
+	function updateContactButtonPosition() {
+		contactButton.css('left', $(window).outerWidth() - contactButton.outerWidth());
 	}
 
 	function setEachAnimation(startDelay, opacityLevel, elements) {
