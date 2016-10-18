@@ -7,3 +7,5 @@ img/
 
 # Excludes third-party plugins
 js/jquery.onscreen.min.js
+
+.idea
