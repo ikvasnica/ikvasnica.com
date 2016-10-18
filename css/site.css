@@ -30,13 +30,20 @@ a[role='button'] {
 	text-decoration: none;
 }
 
-#trial-btn {
+#trial-btn, #blog-btn {
 	background-color: #7722A8;
 	font-size: 2em;
+    min-width: 250px;
 }
 
 #trial-btn:hover {
 	background-color: #4A0975;
+}
+
+#blog-btn {
+    background-color: whitesmoke;
+    color: #7722A8;
+    border: 1px solid #7722A8;
 }
 
 .vertical-center {
@@ -304,6 +311,7 @@ header span {
 
 
 @media (max-width: 991px) {
-	#headings {
-		text-align: center;
-	}
+    #headings {
+        text-align: center;
+    }
+}
