@@ -111,9 +111,11 @@ $(function () {
 	// resets visibility when window resizing
 	$(window).resize(function () {
 		if (isSmallScreen()) {
+			$('[data-toggle=tooltip]').tooltip('disable');
 			$('.thumbnail-buttons').show().css('opacity', 1);
 			$('.caption').show().css('opacity', 1);
 		} else {
+			$('[data-toggle=tooltip]').tooltip('enable');
 			$('.thumbnail-buttons').hide().css('opacity', 0);
 			$('.caption').hide().css('opacity', 0);
 		}
