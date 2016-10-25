@@ -32,8 +32,8 @@ a[role='button'] {
 
 #trial-btn, #blog-btn {
 	background-color: #7722A8;
-	font-size: 2em;
-    min-width: 250px;
+	font-size: 1.6em;
+    min-width: 200px;
 }
 
 #trial-btn:hover {
@@ -247,6 +247,12 @@ header span {
 
 /* Mobile devices */
 @media (max-width: 767px) {
+	#trial-btn, #blog-btn {
+		text-align: center;
+		font-size: 1em;
+		min-width: 100px;
+	}
+
 	.thumbnail {
 		min-height: 0;
 	}
@@ -314,4 +320,16 @@ header span {
     #headings {
         text-align: center;
     }
+}
+
+@media (max-width: 1346px) and (min-width: 768px) {
+	#trial-btn, #blog-btn {
+		text-align: center;
+		font-size: 1.3em;
+		min-width: 150px;
+	}
+
+	.links-row a {
+		font-size: 0.9em;
+	}
 }

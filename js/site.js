@@ -10,7 +10,9 @@ $(function () {
 
 	var defaultDelay = 500;
 
-	updateContactButtonPosition();
+	if (!isSmallScreen()) {
+		updateContactButtonPosition();
+	}
 	
 	// tooltip plugin
 	$('[data-toggle="tooltip"]').tooltip();
@@ -28,12 +30,13 @@ $(function () {
 	   container: window,
 	   direction: 'vertical',
 	   doIn: function() {
-
-	   		contactButton.slideUp(defaultDelay);
+		   contactButton.slideUp(defaultDelay);
 
 	   },
 	   doOut: function() {
-	   	contactButton.slideDown(defaultDelay);
+		   if (!isSmallScreen()) {
+			   contactButton.slideDown(defaultDelay);
+		   }
 	   },
 	   tolerance: 50,
 	   throttle: 50
@@ -84,11 +87,13 @@ $(function () {
 	   			setEachAnimation(delay, 1, socialIcons);
 	   		}, delay);
 
-	   		contactButton.slideUp(defaultDelay);
+		   contactButton.slideUp(defaultDelay);
 
 	   },
 	   doOut: function() {
-	   		contactButton.slideDown(defaultDelay);
+			if (!isSmallScreen()) {
+				contactButton.slideDown(defaultDelay);
+			}
 	   },
 	   tolerance: 150,
 	   throttle: 50
@@ -115,12 +120,11 @@ $(function () {
 			$('.thumbnail-buttons').show().css('opacity', 1);
 			$('.caption').show().css('opacity', 1);
 		} else {
+			updateContactButtonPosition();
 			$('[data-toggle=tooltip]').tooltip('enable');
 			$('.thumbnail-buttons').hide().css('opacity', 0);
 			$('.caption').hide().css('opacity', 0);
 		}
-
-		updateContactButtonPosition();
 	});
 
 
