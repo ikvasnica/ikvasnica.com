@@ -1,12 +1,3 @@
-# Excludes Bootstrap files
-**/bootstrap*.*
-
-# Excludes images and fonts
-fonts/
-img/
-
-#Exclude minified files
-*.min.*
-
-# Exclude PHPStorm project files
-.idea
+/output
+/vendor
+composer.lock
