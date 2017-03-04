@@ -1,5 +1,6 @@
 # Personal portfolio website
-Check out the current version of my portfolio live at http://ikvasnica.com
+Portfolio: https://ikvasnica.com
+Blog: https://ikvasnica.com/blog
 
 ## How to run it?
 
