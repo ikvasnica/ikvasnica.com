@@ -1,0 +1,6 @@
+siteUrl: https://ikvasnica.com
+siteName: "PHP & Symfony Tips"
+siteDescription: "PHP, Symfony, programming tips and tricks by Ivan Kvasnica."
+siteAuthor: Ivan Kvasnica
+configuration:
+    postRoute: blog/:title
