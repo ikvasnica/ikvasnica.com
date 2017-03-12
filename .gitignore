@@ -1,3 +1,4 @@
 /output
 /vendor
 composer.lock
+.idea
