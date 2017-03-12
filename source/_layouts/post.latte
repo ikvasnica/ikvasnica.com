@@ -20,8 +20,8 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
                         <a href="{$siteUrl}/blog">&larr; Go back</a>
-                        <h1>{$post['title']}</h1>
-                        <span class="meta">{include 'record_meta', 'post' => $post}</span>
+                        <h1>{block post_title}{$post['title']}{/block}</h1>
+                        {ifset $post}<span class="meta">{include 'record_meta', 'post' => $post}</span>{/ifset}
                     </div>
                 </div>
             </div>
@@ -33,34 +33,38 @@
         <div class="container">
             <div id="article-body" class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {$post['content']|noescape}
+                    {block post_content}{$post['content']|noescape}{/block}
                 </div>
             </div>
 
             <!-- Social media share buttons -->
-            <section id="social-buttons" class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="fb-like" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+            {ifset $post}
+                <section id="social-buttons" class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="fb-like" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
 
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-via="ikvasnica" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-via="ikvasnica" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-                    <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-                    <script type="IN/Share"></script>
+                        <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                        <script type="IN/Share"></script>
 
-                    <!-- Facebook button align hack -->
-                    <style media="screen" type="text/css">
-                        .fb_iframe_widget span
-                        {
-                            vertical-align: baseline !important;
-                        }
-                    </style>
-                </div>
-            </section>
+                        <!-- Facebook button align hack -->
+                        <style media="screen" type="text/css">
+                            .fb_iframe_widget span
+                            {
+                                vertical-align: baseline !important;
+                            }
+                        </style>
+                    </div>
+                </section>
+            {/ifset}
         </div>
     </article>
 
-    {include 'author_info'}
+    {ifset $post}
+        {include 'author_info'}
 
-    {include 'disqus', 'post' => $post}
+        {include 'disqus', 'post' => $post}
+    {/ifset}
 {/block}
