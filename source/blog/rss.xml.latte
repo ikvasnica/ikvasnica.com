@@ -6,10 +6,10 @@
 >
     <channel>
         <title>{$siteAuthor} - Blog - {$siteName}</title>
-        <link>{$siteUrl}/blog</link>
+        <link>{$siteUrl}</link>
         <description>{$siteDescription}</description>
         <pubDate>{=date('r')}</pubDate>
-        <atom:link href="{$siteUrl}/blog/rss.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="{$siteUrl}/rss.xml" rel="self" type="application/rss+xml" />
 
         {foreach $posts as $post}
             {first}
@@ -20,11 +20,11 @@
 
             <item>
                 <title><![CDATA[ {$post['title']} ]]></title>
-                <link>{$siteUrl}/blog/{$post['relativeUrl']}/</link>
-                <guid isPermaLink="false">{$siteUrl}/blog/{$post['relativeUrl']}/</guid>
+                <link>{$siteUrl}/{$post['relativeUrl']}/</link>
+                <guid isPermaLink="false">{$siteUrl}/{$post['relativeUrl']}/</guid>
                 <dc:creator><![CDATA[ {$siteAuthor} ]]></dc:creator>
                 <pubDate>{$post->getDateInFormat('r')}</pubDate>
-                <comments>{$siteUrl}/blog/{$post['relativeUrl']}#disqus_thread</comments>
+                <comments>{$siteUrl}/{$post['relativeUrl']}#disqus_thread</comments>
             </item>
         {/foreach}
     </channel>
