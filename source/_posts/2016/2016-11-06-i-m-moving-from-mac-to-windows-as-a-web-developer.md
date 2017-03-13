@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "I'm moving from Mac to Windows as a web developer"
+tags: "Windows, web development, PHP, OS X, Mac, tools"
 ---
 
 Not intentionally, really. Not that I was happy about that. In fact, the first day I was so frustrated with development environment on Windows 10 that I was seriously considering buying the new Macbook Pro I dislike so much.

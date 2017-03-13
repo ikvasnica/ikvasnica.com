@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Load test multiple API endpoints concurrently. Use this simple shell script"
+tags: "API, bash, load test, server, shell, Linux, Unix, ab test"
 ---
 
 I've been developing a new REST API used by tens of thousands of users recently.

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "EasyAdmin Bundle: How to remove null values when sorting entities"
+tags: "EasyAdmin, bundle, Symfony, PHP, Doctrine, query, sort"
 ---
 
 **Some web applications have a secret.** I mean, an administration interface. You know, that part of the website behind the _/admin_ you don’t want to expose (especially if you don’t care about cross-site scripting vulnerabilities).

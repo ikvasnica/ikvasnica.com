@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{$siteDescription}">
     <meta name="author" content="{$siteAuthor}">
+    {ifset $tags}<meta name="keywords" content="{$tags}">{/ifset}
+    <link rel="canonical" href="{block canonical_url}{ifset $canonicalUrl}{$canonicalUrl}{else}{$siteUrl}{/ifset}{/block}">
 
     <title>
         {$title} | {$siteName}

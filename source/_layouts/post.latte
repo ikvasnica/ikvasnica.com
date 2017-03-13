@@ -1,5 +1,7 @@
 {extends 'blog_index'}
 
+{block canonical_url}{ifset $post}{$siteUrl}/{$post['relativeUrl']}{else}{include #parent}{/ifset}{/block}
+
 {block content}
     <!-- Facebook stuff -->
     <div id="fb-root"></div>
