@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How to rehash legacy passwords in Symfony"
+noComments: true
 ---
 
 So you've decided to send a legacy project to his well-deserved retirement and write a nice, clean code instead. But there is an asset you cannot throw away. **Users**.
