@@ -10,8 +10,10 @@
 <script>
 
      var disqus_config = function () {
-         this.page.url = {$siteUrl}/blog/{$post['relativeUrl']};
-         this.page.identifier = {$post['title']};
+         var siteUrl = {$siteUrl};
+         var postUrl = {$post['relativeUrl']};
+         this.page.url = siteUrl + '/' + postUrl + '/';
+         console.log(this.page.url);
      };
 
     (function() { // DON'T EDIT BELOW THIS LINE

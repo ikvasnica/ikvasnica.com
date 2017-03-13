@@ -1,10 +1,10 @@
 menu:
     -
         title: All posts
-        link: https://ikvasnica.com/blog
+        link: https://ikvasnica.com/blog/
     -
         title: Portfolio
-        link: https://ikvasnica.com
+        link: https://ikvasnica.com/
     -
         title: RSS
         link: /rss.xml
