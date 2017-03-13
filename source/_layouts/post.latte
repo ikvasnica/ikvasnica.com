@@ -1,5 +1,7 @@
 {extends 'blog_index'}
 
+{block canonical_url}{ifset $post}{$siteUrl}/{$post['relativeUrl']}/{else}{include #parent}{/ifset}{/block}
+
 {block content}
     <!-- Facebook stuff -->
     <div id="fb-root"></div>
@@ -19,7 +21,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <a href="{$siteUrl}/blog">&larr; Go back</a>
+                        <a href="/blog">&larr; Go back</a>
                         <h1>{block post_title}{$post['title']}{/block}</h1>
                         {ifset $post}<span class="meta">{include 'record_meta', 'post' => $post}</span>{/ifset}
                     </div>

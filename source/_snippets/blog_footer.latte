@@ -36,29 +36,31 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+{block add_js}
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
 
-<!-- Custom Theme JavaScript -->
-<script src="/js/clean-blog.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/clean-blog.min.js"></script>
 
-<!-- Highlight.js -->
-<script src="/js/highlight.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+    <!-- Highlight.js -->
+    <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 
-<script id="dsq-count-scr" src="//ikvasnica-com-blog.disqus.com/count.js" async></script>
+    <script id="dsq-count-scr" src="//ikvasnica-com-blog.disqus.com/count.js" async></script>
 
-<!-- Google Analytics -->
-<script>
-    (function(i,s,o,g,r,a,m){ i ['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){ i ['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-76354460-2', 'auto');
-    ga('send', 'pageview');
+        ga('create', 'UA-76354460-2', 'auto');
+        ga('send', 'pageview');
 
-</script>
+    </script>
+{/block}

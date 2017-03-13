@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "jQuery: Run a code before and after each AJAX request"
+tags: "jQuery, JavaScript, AJAX"
 ---
 
 This article shows a quick jQuery hack how to wrap AJAX requests in a way that certain actions happen every time you trigger them.
