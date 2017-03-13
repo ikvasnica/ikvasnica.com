@@ -65,6 +65,8 @@
     {ifset $post}
         {include 'author_info'}
 
-        {include 'disqus', 'post' => $post}
+        {if !isset($post['noComments'])}
+            {include 'disqus', 'post' => $post}
+        {/if}
     {/ifset}
 {/block}
