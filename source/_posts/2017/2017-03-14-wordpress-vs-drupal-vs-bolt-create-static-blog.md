@@ -8,7 +8,7 @@ Last year, I decided to start a blog. A very original and inventive idea, I know
  
 The main topic was IT and web development and as you can guess, the real struggle was to choose the right platform where to write.
  
-I wanted to host it on **my own domain**, so I can couple posts with my portfolio and to have a greater control over the functionality and design.
+I wanted to host it on **my own domain**, so I can couple posts with my portfolio and to have a greater control over the functionality and design. Therefore, Blogger and other free hosted platforms were out.
 
 ## The big ones
 
