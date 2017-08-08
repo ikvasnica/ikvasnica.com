@@ -1,7 +1,9 @@
 ---
+id: 6
 layout: post
 title: "How to protect PHP application from XSS attacks: CSP 3 nonce"
 tags: "PHP, Symfony, CSP, Content Security Policy, nonce, XSS, attack, hack, security"
+related_posts: [4,8]
 ---
 
 _If you wish, you can [go directly into the CSP 3 nonce implementation in Symfony](#nonce-symfony)._

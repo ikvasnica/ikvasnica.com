@@ -1,4 +1,5 @@
 ---
+id: 9
 layout: post
 title: "WordPress vs. Drupal vs. Bolt? Create a static blog instead"
 tags: "Wordpress, Drupal, Bolt, blog, static, PHP, Statie, GitHub"

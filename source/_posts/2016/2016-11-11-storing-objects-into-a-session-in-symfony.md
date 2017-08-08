@@ -1,7 +1,9 @@
 ---
+id: 4
 layout: post
 title: "Storing objects into a session in Symfony"
 tags: "Symfony, PHP, session, web development"
+related_posts: [6,8]
 ---
 
 I’m writing this post mainly because of my frustration I’ve been coming through lately.
