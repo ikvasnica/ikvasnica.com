@@ -1,7 +1,9 @@
 ---
+id: 1
 layout: post
 title: "How to enable PHP APC cache in command line with MAMP"
 tags: "MAMP, OS X, Mac, Apple, PHP, localhost, APC, cache, bash, shell"
+related_posts: [2,3]
 ---
 
 You’re developing your awesome new web project on localhost. But sooner or later, everything should be tested out in an environment **as close as possible to a production set-up**.

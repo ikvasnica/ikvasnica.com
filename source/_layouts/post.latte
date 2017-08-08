@@ -1,6 +1,6 @@
 {extends 'blog_index'}
 
-{block canonical_url}{ifset $post}{$siteUrl}/{$post['relativeUrl']}/{else}{include #parent}{/ifset}{/block}
+{block canonical_url}{ifset $post}{$site_url}/{$post['relativeUrl']}/{else}{include #parent}{/ifset}{/block}
 
 {block content}
     <!-- Facebook stuff -->
@@ -41,6 +41,22 @@
 
             <!-- Social media share buttons -->
             {ifset $post}
+                <aside class="row" style="margin-bottom: 20px;">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        {var $similarPosts = ($post|similarPosts)}
+                        <div n:if="count($similarPosts)">
+                            <strong>Related Posts</strong>
+                            <ul>
+                                {foreach $similarPosts as $similarPost}
+                                    <li>
+                                        <a href="/{$similarPost['relativeUrl']}">{$similarPost['title']}</a>
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
                 <section id="social-buttons" class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <div class="fb-like" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>

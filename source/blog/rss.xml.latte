@@ -5,11 +5,11 @@
      xmlns:atom="http://www.w3.org/2005/Atom"
 >
     <channel>
-        <title>{$siteAuthor} - Blog - {$siteName}</title>
-        <link>{$siteUrl}</link>
-        <description>{$siteDescription}</description>
+        <title>{$site_author} - Blog - {$site_name}</title>
+        <link>{$site_url}</link>
+        <description>{$site_description}</description>
         <pubDate>{=date('r')}</pubDate>
-        <atom:link href="{$siteUrl}/rss.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="{$site_url}/rss.xml" rel="self" type="application/rss+xml" />
 
         {foreach $posts as $post}
             {first}
@@ -20,11 +20,11 @@
 
             <item>
                 <title><![CDATA[ {$post['title']} ]]></title>
-                <link>{$siteUrl}/{$post['relativeUrl']}/</link>
-                <guid isPermaLink="false">{$siteUrl}/{$post['relativeUrl']}/</guid>
-                <dc:creator><![CDATA[ {$siteAuthor} ]]></dc:creator>
+                <link>{$site_url}/{$post['relativeUrl']}/</link>
+                <guid isPermaLink="false">{$site_url}/{$post['relativeUrl']}/</guid>
+                <dc:creator><![CDATA[ {$site_author} ]]></dc:creator>
                 <pubDate>{$post->getDateInFormat('r')}</pubDate>
-                <comments>{$siteUrl}/{$post['relativeUrl']}#disqus_thread</comments>
+                <comments>{$site_url}/{$post['relativeUrl']}#disqus_thread</comments>
             </item>
         {/foreach}
     </channel>

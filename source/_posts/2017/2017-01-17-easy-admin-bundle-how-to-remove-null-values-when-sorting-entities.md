@@ -1,4 +1,5 @@
 ---
+id: 5
 layout: post
 title: "EasyAdmin Bundle: How to remove null values when sorting entities"
 tags: "EasyAdmin, bundle, Symfony, PHP, Doctrine, query, sort"
