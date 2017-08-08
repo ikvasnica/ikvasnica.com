@@ -12,7 +12,7 @@ gulp.task('default', function () {
     return watch(['source/**/*', '!**/*___jb_tmp___'], { ignoreInitial: false })
         // For the second arg see: https://github.com/floatdrop/gulp-watch/issues/242#issuecomment-230209702
         .on('change', function() {
-            exec('vendor/bin/statie generate', function (err, stdout, stderr) {
+            exec('vendor/bin/statie generate source', function (err, stdout, stderr) {
                 console.log(stdout);
                 console.log(stderr);
             });
