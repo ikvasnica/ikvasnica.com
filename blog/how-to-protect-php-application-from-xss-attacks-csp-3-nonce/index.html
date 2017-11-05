@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="PHP, Symfony, programming tips and tricks by Ivan Kvasnica.">
+    <meta name="author" content="Ivan Kvasnica">
+    <meta name="keywords" content="PHP, Symfony, CSP, Content Security Policy, nonce, XSS, attack, hack, security">
+    <link rel="canonical" href="https://ikvasnica.com/blog/how-to-protect-php-application-from-xss-attacks-csp-3-nonce/">
+
+    <title>
+        How to protect PHP application from XSS attacks: CSP 3 nonce | PHP &amp; Symfony Tips
+    </title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Highlight.js -->
+        <link rel="stylesheet" href="/css/atom-one-dark.css">
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+</head>
+
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+
+
+                    <li class=" index-1 first">
+
+                        <a href="https://ikvasnica.com/blog/" title='All posts'>
+                            All posts
+                        </a>
+
+                    </li>
+
+
+                    <li class=" index-2">
+
+                        <a href="https://ikvasnica.com/" title='Portfolio'>
+                            Portfolio
+                        </a>
+
+                    </li>
+
+
+                    <li class=" index-3 last">
+
+                        <a href="/rss.xml" title='RSS'>
+                            RSS
+                        </a>
+
+                    </li>
+
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>        <!-- Facebook stuff -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1715191915471013";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <a href="/blog">&larr; Go back</a>
+                        <h1>How to protect PHP application from XSS attacks: CSP 3 nonce</h1>
+                        <span class="meta">by <em>Ivan Kvasnica</em>, 28.01.2017
+ - <a href="/blog/how-to-protect-php-application-from-xss-attacks-csp-3-nonce/#disqus_thread">Comment</a><br>
+</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div id="article-body" class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+<p><em>If you wish, you can <a href="#nonce-symfony">go directly into the CSP 3 nonce implementation in Symfony</a>.</em></p>
+<p>Symfony is a pretty much secure framework by default. However, that doesn't imply that an unexperienced developer cannot introduce a severe security bug into his application.</p>
+<h2>Stealing credit card numbers, showing fake login screens...</h2>
+<p><strong>One of the most common and most dangerous security risk</strong> in web development is a <a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)">cross-site scripting attack (XSS)</a>. Long story short, an attacker could run a JavaScript snippet right on your website if you allow him to do so. Users cannot do anything about it.</p>
+<p>By running a script, I don't mean just alerting an annoying message. <a href="https://www.owasp.org/index.php/OWASP_Xenotix_XSS_Exploit_Framework#tab=Features">I mean collecting user information</a> including <strong>his passwords, credit card numbers, showing him a fake Google login page or LastPass pop-up</strong>. Even an advanced user could not spot a difference between the fake and real one.</p>
+<p><img src="/img/posts/xenotic.png" alt="Xenotic XSS Exploitation Framework" /><br />
+<em>Collecting credit card numbers by listening to POST requests.</em></p>
+<h2>Content Security Policy and 'nonce' attribute</h2>
+<p>So how should you protect a Symfony application properly?</p>
+<p>When it comes to an XSS attack, the first advice should always be to <strong>use a reliable templating engine</strong>. In PHP world, it's usually Twig. It automatically escapes every string that is being showed to users.</p>
+<p>This should be standard. <strong>A golden rule.</strong></p>
+<p>But what if we don't always use it? What if there is a bug in Twig or <a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet">somewhere else</a>? We can protect our users even further. Meet the <a href="https://www.w3.org/TR/CSP3/">Content Security Policy (CSP)</a>, <strong>a built-in security feature in modern browsers.</strong></p>
+<p>Eeer...built-in. Well... Some browsers support the most recent version (3) of CSP, like Chrome, some of them are going to support it soon (Firefox) or supports just older, much more complicated specifications (Safari). And even with Chrome, there are many users with old versions installed. This causes many problems.</p>
+<p><strong>Fortunately, there is a way how to secure at least users with recent versions of a browser while offering some backward compatibility protection</strong> to browsers supporting CSP 2 or 1.</p>
+<p>All you need to do is to set HTTP response header <em>Content-Security-Policy</em> in each request with this value:</p>
+<pre><code>script-src 'nonce-randomNonceString' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic' https: http:; object-src 'none'</code></pre>
+<p>Note the <em>randomNonceString</em> value. You should generate a random, long string per each request and put it into each script tag on your website. Otherwise, (modern, most recent) browser will block it from being loaded.</p>
+<pre><code class="language-html">&lt;script nonce="nonceRandomString"&gt;&lt;/script&gt;</code></pre>
+<h2><a name="nonce-symfony"></a>How to generate CSP nonce automatically in Symfony</h2>
+<p>Finally, <strong>let's implement CSP 3 and nonce parameters into a PHP application</strong>. I will use the Symfony Framework as an example, but the principle is the same everywhere, even in vanilla PHP. Feel free to post your solutions in other frameworks in comments, I will be happy to put it into the article.</p>
+<p>First of all, there might be already a ready to use plugin. You might use, for example, <a href="https://github.com/nelmio/NelmioSecurityBundle">NelmioSecurityBundle</a> which implements this. This bundle has a lot of functionality, which you might not use, so let's try to do our own solution.</p>
+<p><strong>What we want to achieve:</strong></p>
+<ol>
+<li>Generate a random <em>nonce</em> string on each request.</li>
+<li>Put the <em>nonce</em> string as an attribute into each <em>script</em> tag</li>
+<li>Set the same string as a value to the <em>Content-Security-Policy</em> HTTP header.</li>
+</ol>
+<h3>1. Generate a random nonce string on each request.</h3>
+<p>Let's create a service (a PHP class) for that! First, <strong>generate a random string, but only once during a request</strong>.</p>
+<h4>src/AppBundle/NonceGenerator.php</h4>
+<pre><code class="language-php">namespace AppBundle;
+
+class NonceGenerator
+{
+
+    /** @var String|null */
+    private $nonce;
+
+    /**
+     * Generates a random nonce parameter.
+     *
+     * @return string
+     */
+    public function getNonce() : String
+    {
+        // generation occurs only when $this-&gt;nonce is still null
+        if (!$this-&gt;nonce) {
+            $this-&gt;nonce = base64_encode(random_bytes(20));
+        }
+
+        return $this-&gt;nonce;
+    }
+
+}</code></pre>
+<h3>2. Put the <em>nonce</em> string as an attribute into each <em>script</em> tag</h3>
+<p>Unfortunately, we need to put the <em>nonce</em> attribute manually into each <em>script</em> tag. <strong>It might be an issue when it comes to third party bundles in Symfony</strong> (or generally any plugins in other frameworks) where you have no control over the code.</p>
+<p>You may hack it by overriding templates, for example, but if it's really not possible, either make an exception for a specific routes or open an issue on a repository for the specific project and request authors to either implement the CSP nonce support or to make templates more flexible.</p>
+<p>In your own code, you need to call the _getNonce()_method. If you use Twig (you should!), the best way is to <strong>create a custom Twig function</strong>. Let's do that.</p>
+<h4>src/AppBundle/NonceGenerator.php</h4>
+<pre><code class="language-php">namespace AppBundle;
+
+class NonceGenerator extends \Twig_Extension
+{
+
+    // ...
+    /**
+     * @return array
+     */
+    public function getFunctions()
+    {
+        return [
+            new \Twig_SimpleFunction('csp_nonce', [$this, 'getNonce']),
+        ];
+    }
+
+    // ...
+
+}</code></pre>
+<p>The code creates a simple Twig function _csp<em>nonce</em> which will just return a result from our _getNonce _method. Now use it in your Twig templates.</p>
+<pre><code class="language-html">&lt;script src="/path/to/script.js" nonce="{{ csp_nonce() }}"&gt;&lt;/script&gt;</code></pre>
+<h3>3. Set the same string as a value to the <em>Content-Security-Policy</em> HTTP header.</h3>
+<p>Setting <em>nonce</em> attributes is useless without informing the browser that we want to enforce CSP rules.</p>
+<p>In Symfony, we create an event listener to the <em>kernel.response</em> event so <strong>it gets called every time a response is sent to the browser</strong>.</p>
+<h4>src/AppBundle/XSSProtector.php</h4>
+<pre><code class="language-php">namespace AppBundle;
+
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+
+class XSSProtector implements EventSubscriberInterface
+{
+
+    /** @var NonceGenerator $nonceGenerator */
+    private $nonceGenerator;
+
+    public function __construct(NonceGenerator $nonceGenerator)
+    {
+        // inject the nonce generator service we created in previous steps
+        $this-&gt;nonceGenerator = $nonceGenerator;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents()
+    {
+        // listen to the kernel.response event
+        return [KernelEvents::RESPONSE =&gt; 'addCSPHeaderToResponse'];
+    }
+
+    /**
+     * Adds the Content Security Policy header.
+     *
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     */
+    public function addCSPHeaderToResponse(FilterResponseEvent $event)
+    {
+        // get the Response object from the event
+        $response = $event-&gt;getResponse();
+
+        // create a CSP rule, using the nonce generator service
+        $nonce = $this-&gt;nonceGenerator-&gt;getNonce();
+        $cspHeader = "script-src 'nonce-" . $nonce . "' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic' https: http:; object-src 'none';";
+
+        // set CPS header on the response object
+        $response-&gt;headers-&gt;set("Content-Security-Policy", $cspHeader);
+    }</code></pre>
+<p>Don't forget to register your newly created services.</p>
+<h4>app/config/services.yml</h4>
+<pre><code>services:  
+  app.nonce_generator:
+    class: AppBundle\NonceGenerator
+    tags:
+      - { name: twig.extension }
+
+  app.xss_protector:
+    class: AppBundle\XSSProtector
+    autowire: true
+    tags:
+      - { name: kernel.event_subscriber }</code></pre>
+<p><strong>That's it! Now each script tag should have a random <em>nonce</em> attribute after each refresh of the website.</strong></p>
+<p>Do you have any comments or improvements? I'm looking forward to your comments below.</p>                </div>
+            </div>
+
+            <!-- Social media share buttons -->
+                <aside class="row" style="margin-bottom: 20px;">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+Deprecated: "{$post|similarPosts} Latte filter was deprecated and will be removed in Statie 3.0. Use {$post|relatedPosts} instead." in /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/RelatedPosts/src/Latte/Filter/RelatedPostsFilter.php on line 38
+
+Call Stack:
+    0.0001     362432   1. {main}() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie:0
+    0.0002     370832   2. include_once('/home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie.php') /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie:4
+    0.1700    6847968   3. Symfony\Component\Console\Application->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie.php:43
+    0.1788    7089248   4. Symfony\Component\Console\Application->doRun() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:125
+    0.1791    7089248   5. Symfony\Component\Console\Application->doRunCommand() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:224
+    0.1791    7089248   6. Symplify\Statie\Console\Command\GenerateCommand->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:888
+    0.1804    7093976   7. Symplify\Statie\Console\Command\GenerateCommand->execute() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Command/Command.php:262
+    0.1804    7093976   8. Symplify\Statie\Application\StatieApplication->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Console/Command/GenerateCommand.php:43
+    0.1989    7629552   9. Symplify\Statie\Application\StatieApplication->processTemplates() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Application/StatieApplication.php:63
+    0.1992    7648656  10. Symplify\Statie\Renderable\RenderableFilesProcessor->processFiles() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Application/StatieApplication.php:105
+    0.2291    7750200  11. Symplify\Statie\Renderable\Latte\LatteFileDecorator->decorateFiles() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/RenderableFilesProcessor.php:64
+    9.4462    9395000  12. Symplify\Statie\Renderable\Latte\LatteFileDecorator->decorateFile() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:48
+    9.4462    9395792  13. Symplify\Statie\Renderable\Latte\LatteFileDecorator->renderToString() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:79
+    9.4462    9395888  14. Symplify\Statie\FlatWhite\Latte\LatteRenderer->renderExcludingHighlightBlocks() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:127
+    9.4463    9420328  15. Latte\Engine->renderToString() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/FlatWhite/src/Latte/LatteRenderer.php:68
+    9.4694    9506352  16. Template82ec672e66->capture() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Engine.php:81
+    9.4694    9523672  17. Template82ec672e66->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:326
+    9.4695    9530888  18. Template1826d3db16->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:176
+    9.4696    9535840  19. Templatea961852caf->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:176
+    9.4696    9536296  20. Templatea961852caf->main() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:198
+    9.4700    9540376  21. Templatea961852caf->renderBlock() /tmp/_flat_white_latte_factory_cache/a961852caf.php:65
+    9.4700    9540400  22. Template1826d3db16->blockContent() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:282
+    9.4702    9542768  23. Symplify\Statie\RelatedPosts\Latte\Filter\RelatedPostsFilter->Symplify\Statie\RelatedPosts\Latte\Filter\{closure}() /tmp/_flat_white_latte_factory_cache/1826d3db16.php:120
+    9.4702    9542768  24. trigger_error() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/RelatedPosts/src/Latte/Filter/RelatedPostsFilter.php:38
+
+                        <div>
+                            <strong>Related Posts</strong>
+                            <ul>
+                                    <li>
+                                        <a href="/blog/how-to-rehash-legacy-passwords-in-symfony">How to rehash legacy passwords in Symfony</a>
+                                    </li>
+                                    <li>
+                                        <a href="/blog/storing-objects-into-a-session-in-symfony">Storing objects into a session in Symfony</a>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <section id="social-buttons" class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="fb-like" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-via="ikvasnica" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                        <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                        <script type="IN/Share"></script>
+
+                        <!-- Facebook button align hack -->
+                        <style media="screen" type="text/css">
+                            .fb_iframe_widget span
+                            {
+                                vertical-align: baseline !important;
+                            }
+                        </style>
+                    </div>
+                </section>
+        </div>
+    </article>
+
+<aside id="author-bio">
+    <div class="container">
+        <div class="row">
+            <div id="bio-photo" class="col-lg-2 col-lg-offset-2 col-md-1 col-md-offset-1">
+                <img src="/img/bio_ivan.png" alt="Ivan Kvasnica">
+            </div>
+            <div class="col-lg-6 col-md-9 col-xs-10">
+                <h3>Ivan Kvasnica</h3>
+                <p><a href="http://twitter.com/ikvasnica" target="_blank">@ikvasnica</a> is a Symfony & Drupal developer at <a href="http://www.b.cz" target="_blank">Business Factory</a>, working
+                    on <a href="http://www.iprima.cz" target="_blank">TV Prima</a>'s projects. In past, he used to live in Norway, Denmark
+                    and Slovakia, and wrote <a href="http://www.zive.sk/profil-autora/469/ivan-kvasnica" target="_blank">hundreds of articles on IT topics</a>.
+                    He likes organizing <a href="https://www.facebook.com/groups/englishinbrno/" target="_blank">international events</a> and traveling.</p>
+            </div>
+        </div>
+    </div>
+</aside>
+<section>
+    <div class="container">
+        <div class="row">
+            <div id="disqus_thread" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://ikvasnica-com-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<!-- Footer -->
+<hr>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="https://twitter.com/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/clean-blog.min.js"></script>
+
+    <!-- Highlight.js -->
+    <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script id="dsq-count-scr" src="//ikvasnica-com-blog.disqus.com/count.js" async></script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){ i ['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-76354460-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+</body>
+
+</html>

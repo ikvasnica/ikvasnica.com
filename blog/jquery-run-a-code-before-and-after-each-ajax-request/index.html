@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="PHP, Symfony, programming tips and tricks by Ivan Kvasnica.">
+    <meta name="author" content="Ivan Kvasnica">
+    <meta name="keywords" content="jQuery, JavaScript, AJAX">
+    <link rel="canonical" href="https://ikvasnica.com/blog/jquery-run-a-code-before-and-after-each-ajax-request/">
+
+    <title>
+        jQuery: Run a code before and after each AJAX request | PHP &amp; Symfony Tips
+    </title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Highlight.js -->
+        <link rel="stylesheet" href="/css/atom-one-dark.css">
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+</head>
+
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+
+
+                    <li class=" index-1 first">
+
+                        <a href="https://ikvasnica.com/blog/" title='All posts'>
+                            All posts
+                        </a>
+
+                    </li>
+
+
+                    <li class=" index-2">
+
+                        <a href="https://ikvasnica.com/" title='Portfolio'>
+                            Portfolio
+                        </a>
+
+                    </li>
+
+
+                    <li class=" index-3 last">
+
+                        <a href="/rss.xml" title='RSS'>
+                            RSS
+                        </a>
+
+                    </li>
+
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>        <!-- Facebook stuff -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1715191915471013";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <a href="/blog">&larr; Go back</a>
+                        <h1>jQuery: Run a code before and after each AJAX request</h1>
+                        <span class="meta">by <em>Ivan Kvasnica</em>, 05.02.2017
+ - <a href="/blog/jquery-run-a-code-before-and-after-each-ajax-request/#disqus_thread">Comment</a><br>
+</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div id="article-body" class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+<p>This article shows a quick jQuery hack how to wrap AJAX requests in a way that certain actions happen every time you trigger them.</p>
+<p><strong>Consider an example:</strong> You have multiple AJAX requests across your JavaScript application. Perhaps a lot of buttons, each sending different request to backend. But on each of those requests, you would like to <strong>run few callbacks before and after</strong>. More specifically, you want to show a loading animation and change the button text.</p>
+<p>How to achieve that using jQuery?</p>
+<p>It's easy, right? Just use <a href="http://api.jquery.com/category/ajax/global-ajax-event-handlers/">global AJAX event handlers</a>.</p>
+<pre><code class="language-javascript">var sendButton = $('#send-button')
+var oldText = ''
+
+$(document)
+  .ajaxStart(function () {
+    oldText = sendButton.text()
+    sendButton.text('Loading...')
+  })
+  .ajaxComplete(function () {
+    sendButton.text(oldText)
+  })</code></pre>
+<p>This approach may be a good fit for you. But only as long as you have one element relying on AJAX request per page. If you have multiple ones, the text would be changed on all of them.</p>
+<p><strong>Hmm... What about binding the AJAX callbacks to elements instead of the global document?</strong> Well, as of jQuery 1.9, <a href="https://jquery.com/upgrade-guide/1.9/#ajax-events-should-be-attached-to-document">that is no longer possible</a>.</p>
+<h2>Create your own AJAX wrapper</h2>
+<p>The solution is to write your own jQuery AJAX wrapper around the default <em>$.get()</em> (or <em>$.post()</em> ) method. <strong>It's simple as this:</strong></p>
+<pre><code class="language-javascript">var AJAX = {
+  fetch: function (url, data, targetObj) {
+    var oldText = ''
+    targetObj = (this.isDefined(targetObj) ? targetObj : null)
+    if (targetObj) {
+      oldText = targetObj.text()
+      targetObj.text('Loading...')
+    }
+
+    return $
+      .get(url, data)
+      .always(function () {
+        // if target object is provided, run end callbacks on it
+        if (targetObj) {
+          targetObj.text(oldText)
+        }
+      })
+  }
+}</code></pre>
+<p>It will do the same as the previous example, but only to the object that triggers the AJAX request. Moreover, if you don't provide the target object, it behaves like you have called <em>$.get()</em> function. You can add more <em>.done</em> and <em>.always</em> callbacks, all of them will be executed.</p>
+<p>Now, let's rewrite the example so we can <strong>add more default callbacks and keep them a little bit separated</strong>.</p>
+<pre><code class="language-javascript">fetch: function (url, data, targetObj) {
+    // cache provided to callbacks
+    var cache = {}
+
+    // all default callbacks are applied
+    var getDefaultCallbacks = function () {
+      return {
+        changeText: function (targetObj) {
+          var currentText = targetObj.text()
+          var newText = (typeof cache.oldText !== 'undefined' ? cache.oldText : 'Loading...')
+          targetObj.text(newText)
+          cache.oldText = currentText
+        },
+
+        toggleClass: function (targetObj) {
+          targetObj.toggleClass('loading')
+        }
+      }
+    }
+
+    // iterate over available callbacks and run them
+    var runCallbacks = function (targetObj) {
+      // if no target object has been provided, don't run any callback
+      if (!targetObj) {
+        return false
+      }
+
+      // get a runnable callback list
+      var callbacksToRun = getDefaultCallbacks()
+
+      // run callbacks
+      for (var callback in callbacksToRun) {
+        if (callbacksToRun.hasOwnProperty(callback) &amp;&amp; typeof callbacksToRun[callback] === 'function') {
+          callbacksToRun[callback](targetObj)
+        }
+      }
+    }
+
+    // if target object is provided, run start callbacks on it
+    targetObj = (this.isDefined(targetObj) ? targetObj : null)
+    runCallbacks(targetObj)
+
+    return $
+      .get(url, data)
+      .always(function () {
+        // if target object is provided, run end callbacks on it
+        runCallbacks(targetObj)
+      })
+  }</code></pre>
+<p>The code looks complicated, but it's basically the same, only we can now add more callbacks into the <em>getDefaultCallbacks</em> list. <strong>Please note that the callbacks are written in a way they can be used both on start and finish of an AJAX request.</strong> They will just toggle the state.</p>
+<h2>Adding custom AJAX callbacks</h2>
+<p>We can improve it further. Let's say you want to run completely different callbacks for some elements. No problem. Just add support for custom callbacks.</p>
+<pre><code class="language-javascript">fetch: function (url, data, targetObj, callbackStart, callbackEnd) {
+    // ...
+
+    var runCallbacks = function (customCallback, targetObj) {
+      //...
+
+      // get a runnable callback list
+      var callbacksToRun = (typeof customCallback !== 'undefined' ? { custom: customCallback} : getDefaultCallbacks())
+
+      // ...
+    }
+
+    // ...
+
+    runCallbacks(callbackStart, targetObj)
+
+    return $
+      .get(url, data)
+      .always(function () {
+        // if target object is provided, run end callbacks on it
+        runCallbacks(callbackEnd, targetObj)
+      })
+  }</code></pre>
+<p>The only change is that we can pass custom callbacks to our <em>fetch</em> function. These must be functions that we can pass a target object to.</p>
+<h2>Logging errors automatically</h2>
+<p>You can even <strong>automate logging AJAX errors</strong>. Just add few helper methods.</p>
+<pre><code class="language-javascript">var AJAX = {
+  /* HELPER WRAPPER FUNCTIONS */
+  logAjaxError: function (jqXHR, textStatus, errorThrown) {
+      console.log('AJAX ERROR:' + errorThrown)
+  },
+
+  // check whether response contains an error message and logs them
+  handleAjaxError: function (response) {
+    if (typeof response.error !== 'undefined' &amp;&amp; typeof response.error_description !== 'undefined') {
+        AJAX.logAjaxError(response.error_description)
+    }
+  },
+
+  // ...
+
+  fetch: function (url, data, targetObj, callbackStart, callbackEnd) {
+    // ...
+
+    return $
+      .get(url, data)
+      .done(this.handleAjaxError)
+      .fail(this.logAjaxError)
+       // ...
+  }</code></pre>
+<p><strong>And that's it!</strong> You can now call <em>AJAX.fetch()</em> method instead of <em>$.get()</em> wherever you want. Just pass it <em>$(this)</em> object and it will perform default callbacks on it.</p>
+<pre><code class="language-javascript">AJAX
+  .fetch('backend_script.php', { id: 12345}, $(this))
+  .done(function (response) {
+    console.log(response)
+  })</code></pre>
+<p>Check out the <a href="https://github.com/ikvasnica/js_fetch">full version of this code on GitHub</a>.</p>                </div>
+            </div>
+
+            <!-- Social media share buttons -->
+                <aside class="row" style="margin-bottom: 20px;">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+Deprecated: "{$post|similarPosts} Latte filter was deprecated and will be removed in Statie 3.0. Use {$post|relatedPosts} instead." in /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/RelatedPosts/src/Latte/Filter/RelatedPostsFilter.php on line 38
+
+Call Stack:
+    0.0001     362432   1. {main}() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie:0
+    0.0002     370832   2. include_once('/home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie.php') /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie:4
+    0.1700    6847968   3. Symfony\Component\Console\Application->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie.php:43
+    0.1788    7089248   4. Symfony\Component\Console\Application->doRun() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:125
+    0.1791    7089248   5. Symfony\Component\Console\Application->doRunCommand() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:224
+    0.1791    7089248   6. Symplify\Statie\Console\Command\GenerateCommand->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:888
+    0.1804    7093976   7. Symplify\Statie\Console\Command\GenerateCommand->execute() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Command/Command.php:262
+    0.1804    7093976   8. Symplify\Statie\Application\StatieApplication->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Console/Command/GenerateCommand.php:43
+    0.1989    7629552   9. Symplify\Statie\Application\StatieApplication->processTemplates() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Application/StatieApplication.php:63
+    0.1992    7648656  10. Symplify\Statie\Renderable\RenderableFilesProcessor->processFiles() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Application/StatieApplication.php:105
+    0.2291    7750200  11. Symplify\Statie\Renderable\Latte\LatteFileDecorator->decorateFiles() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/RenderableFilesProcessor.php:64
+    6.4313    9268448  12. Symplify\Statie\Renderable\Latte\LatteFileDecorator->decorateFile() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:48
+    6.4314    9269240  13. Symplify\Statie\Renderable\Latte\LatteFileDecorator->renderToString() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:79
+    6.4314    9269336  14. Symplify\Statie\FlatWhite\Latte\LatteRenderer->renderExcludingHighlightBlocks() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:127
+    6.4315    9282464  15. Latte\Engine->renderToString() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/FlatWhite/src/Latte/LatteRenderer.php:68
+    6.4448    9360424  16. Template333d059fc2->capture() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Engine.php:81
+    6.4448    9377744  17. Template333d059fc2->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:326
+    6.4449    9384960  18. Template1826d3db16->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:176
+    6.4450    9389912  19. Templatea961852caf->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:176
+    6.4450    9390368  20. Templatea961852caf->main() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:198
+    6.4453    9394448  21. Templatea961852caf->renderBlock() /tmp/_flat_white_latte_factory_cache/a961852caf.php:65
+    6.4453    9394472  22. Template1826d3db16->blockContent() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:282
+    6.4455    9396840  23. Symplify\Statie\RelatedPosts\Latte\Filter\RelatedPostsFilter->Symplify\Statie\RelatedPosts\Latte\Filter\{closure}() /tmp/_flat_white_latte_factory_cache/1826d3db16.php:120
+    6.4455    9396840  24. trigger_error() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/RelatedPosts/src/Latte/Filter/RelatedPostsFilter.php:38
+
+                    </div>
+                </aside>
+
+                <section id="social-buttons" class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="fb-like" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-via="ikvasnica" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                        <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                        <script type="IN/Share"></script>
+
+                        <!-- Facebook button align hack -->
+                        <style media="screen" type="text/css">
+                            .fb_iframe_widget span
+                            {
+                                vertical-align: baseline !important;
+                            }
+                        </style>
+                    </div>
+                </section>
+        </div>
+    </article>
+
+<aside id="author-bio">
+    <div class="container">
+        <div class="row">
+            <div id="bio-photo" class="col-lg-2 col-lg-offset-2 col-md-1 col-md-offset-1">
+                <img src="/img/bio_ivan.png" alt="Ivan Kvasnica">
+            </div>
+            <div class="col-lg-6 col-md-9 col-xs-10">
+                <h3>Ivan Kvasnica</h3>
+                <p><a href="http://twitter.com/ikvasnica" target="_blank">@ikvasnica</a> is a Symfony & Drupal developer at <a href="http://www.b.cz" target="_blank">Business Factory</a>, working
+                    on <a href="http://www.iprima.cz" target="_blank">TV Prima</a>'s projects. In past, he used to live in Norway, Denmark
+                    and Slovakia, and wrote <a href="http://www.zive.sk/profil-autora/469/ivan-kvasnica" target="_blank">hundreds of articles on IT topics</a>.
+                    He likes organizing <a href="https://www.facebook.com/groups/englishinbrno/" target="_blank">international events</a> and traveling.</p>
+            </div>
+        </div>
+    </div>
+</aside>
+<section>
+    <div class="container">
+        <div class="row">
+            <div id="disqus_thread" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://ikvasnica-com-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<!-- Footer -->
+<hr>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="https://twitter.com/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/clean-blog.min.js"></script>
+
+    <!-- Highlight.js -->
+    <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script id="dsq-count-scr" src="//ikvasnica-com-blog.disqus.com/count.js" async></script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){ i ['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-76354460-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+</body>
+
+</html>

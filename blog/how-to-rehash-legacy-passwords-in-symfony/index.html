@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="PHP, Symfony, programming tips and tricks by Ivan Kvasnica.">
+    <meta name="author" content="Ivan Kvasnica">
+    <meta name="keywords" content="Symfony, PHP, security, password, hash">
+    <link rel="canonical" href="https://ikvasnica.com/blog/how-to-rehash-legacy-passwords-in-symfony/">
+
+    <title>
+        How to rehash legacy passwords in Symfony | PHP &amp; Symfony Tips
+    </title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Highlight.js -->
+        <link rel="stylesheet" href="/css/atom-one-dark.css">
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+</head>
+
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+
+
+                    <li class=" index-1 first">
+
+                        <a href="https://ikvasnica.com/blog/" title='All posts'>
+                            All posts
+                        </a>
+
+                    </li>
+
+
+                    <li class=" index-2">
+
+                        <a href="https://ikvasnica.com/" title='Portfolio'>
+                            Portfolio
+                        </a>
+
+                    </li>
+
+
+                    <li class=" index-3 last">
+
+                        <a href="/rss.xml" title='RSS'>
+                            RSS
+                        </a>
+
+                    </li>
+
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>        <!-- Facebook stuff -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1715191915471013";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <a href="/blog">&larr; Go back</a>
+                        <h1>How to rehash legacy passwords in Symfony</h1>
+                        <span class="meta">by <em>Ivan Kvasnica</em>, 07.02.2017
+<br>
+</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div id="article-body" class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+<p>So you've decided to send a legacy project to his well-deserved retirement and write a nice, clean code instead. But there is an asset you cannot throw away. <strong>Users</strong>.</p>
+<p>If you care about web security at least a bit and you haven't lived in a cave for the last couple of years, you might have heard of a fact that <strong>storing users passwords in plaintext is a bad thing.</strong> So even your legacy project did hopefully use a hashing algorithm. But since you care about the security, you would like to use bcrypt for all users. Right now.</p>
+<p><em>This post has been written for the Czech PHP community blog. You can <a href="https://pehapkari.cz/blog/2017/02/06/how-to-rehash-legacy-passwords-in-symfony/">continue reading there</a>.</em></p>                </div>
+            </div>
+
+            <!-- Social media share buttons -->
+                <aside class="row" style="margin-bottom: 20px;">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+Deprecated: "{$post|similarPosts} Latte filter was deprecated and will be removed in Statie 3.0. Use {$post|relatedPosts} instead." in /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/RelatedPosts/src/Latte/Filter/RelatedPostsFilter.php on line 38
+
+Call Stack:
+    0.0001     362432   1. {main}() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie:0
+    0.0002     370832   2. include_once('/home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie.php') /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie:4
+    0.1700    6847968   3. Symfony\Component\Console\Application->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/bin/statie.php:43
+    0.1788    7089248   4. Symfony\Component\Console\Application->doRun() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:125
+    0.1791    7089248   5. Symfony\Component\Console\Application->doRunCommand() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:224
+    0.1791    7089248   6. Symplify\Statie\Console\Command\GenerateCommand->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Application.php:888
+    0.1804    7093976   7. Symplify\Statie\Console\Command\GenerateCommand->execute() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symfony/console/Command/Command.php:262
+    0.1804    7093976   8. Symplify\Statie\Application\StatieApplication->run() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Console/Command/GenerateCommand.php:43
+    0.1989    7629552   9. Symplify\Statie\Application\StatieApplication->processTemplates() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Application/StatieApplication.php:63
+    0.1992    7648656  10. Symplify\Statie\Renderable\RenderableFilesProcessor->processFiles() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Application/StatieApplication.php:105
+    0.2291    7750200  11. Symplify\Statie\Renderable\Latte\LatteFileDecorator->decorateFiles() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/RenderableFilesProcessor.php:64
+    3.4259    9281224  12. Symplify\Statie\Renderable\Latte\LatteFileDecorator->decorateFile() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:48
+    3.4259    9282640  13. Symplify\Statie\Renderable\Latte\LatteFileDecorator->renderToString() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:79
+    3.4259    9282720  14. Symplify\Statie\FlatWhite\Latte\LatteRenderer->renderExcludingHighlightBlocks() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/src/Renderable/Latte/LatteFileDecorator.php:127
+    3.4260    9282768  15. Latte\Engine->renderToString() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/FlatWhite/src/Latte/LatteRenderer.php:68
+    3.4296    9231944  16. Templated2f87c052e->capture() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Engine.php:81
+    3.4296    9249264  17. Templated2f87c052e->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:326
+    3.4298    9256480  18. Template1826d3db16->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:176
+    3.4298    9261432  19. Templatea961852caf->render() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:176
+    3.4299    9261888  20. Templatea961852caf->main() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:198
+    3.4302    9265968  21. Templatea961852caf->renderBlock() /tmp/_flat_white_latte_factory_cache/a961852caf.php:65
+    3.4302    9265992  22. Template1826d3db16->blockContent() /home/travis/build/ikvasnica/ikvasnica.com/vendor/latte/latte/src/Latte/Runtime/Template.php:282
+    3.4303    9268360  23. Symplify\Statie\RelatedPosts\Latte\Filter\RelatedPostsFilter->Symplify\Statie\RelatedPosts\Latte\Filter\{closure}() /tmp/_flat_white_latte_factory_cache/1826d3db16.php:120
+    3.4303    9268360  24. trigger_error() /home/travis/build/ikvasnica/ikvasnica.com/vendor/symplify/statie/packages/RelatedPosts/src/Latte/Filter/RelatedPostsFilter.php:38
+
+                        <div>
+                            <strong>Related Posts</strong>
+                            <ul>
+                                    <li>
+                                        <a href="/blog/how-to-protect-php-application-from-xss-attacks-csp-3-nonce">How to protect PHP application from XSS attacks: CSP 3 nonce</a>
+                                    </li>
+                                    <li>
+                                        <a href="/blog/storing-objects-into-a-session-in-symfony">Storing objects into a session in Symfony</a>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <section id="social-buttons" class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="fb-like" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-via="ikvasnica" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                        <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                        <script type="IN/Share"></script>
+
+                        <!-- Facebook button align hack -->
+                        <style media="screen" type="text/css">
+                            .fb_iframe_widget span
+                            {
+                                vertical-align: baseline !important;
+                            }
+                        </style>
+                    </div>
+                </section>
+        </div>
+    </article>
+
+<aside id="author-bio">
+    <div class="container">
+        <div class="row">
+            <div id="bio-photo" class="col-lg-2 col-lg-offset-2 col-md-1 col-md-offset-1">
+                <img src="/img/bio_ivan.png" alt="Ivan Kvasnica">
+            </div>
+            <div class="col-lg-6 col-md-9 col-xs-10">
+                <h3>Ivan Kvasnica</h3>
+                <p><a href="http://twitter.com/ikvasnica" target="_blank">@ikvasnica</a> is a Symfony & Drupal developer at <a href="http://www.b.cz" target="_blank">Business Factory</a>, working
+                    on <a href="http://www.iprima.cz" target="_blank">TV Prima</a>'s projects. In past, he used to live in Norway, Denmark
+                    and Slovakia, and wrote <a href="http://www.zive.sk/profil-autora/469/ivan-kvasnica" target="_blank">hundreds of articles on IT topics</a>.
+                    He likes organizing <a href="https://www.facebook.com/groups/englishinbrno/" target="_blank">international events</a> and traveling.</p>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- Footer -->
+<hr>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="https://twitter.com/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/ikvasnica">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/clean-blog.min.js"></script>
+
+    <!-- Highlight.js -->
+    <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script id="dsq-count-scr" src="//ikvasnica-com-blog.disqus.com/count.js" async></script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){ i ['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-76354460-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+</body>
+
+</html>
