@@ -43,7 +43,7 @@
             {ifset $post}
                 <aside class="row" style="margin-bottom: 20px;">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        {var $similarPosts = ($post|similarPosts)}
+                        {var $similarPosts = ($post|relatedPosts)}
                         <div n:if="count($similarPosts)">
                             <strong>Related Posts</strong>
                             <ul>
