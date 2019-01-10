@@ -1,90 +1,108 @@
-{extends '_layouts/blog_index.latte'}
+<!DOCTYPE html>
+<html lang="en">
 
-{block canonical_url}{ifset $post}{$site_url}/{$post['relativeUrl']}/{else}{include #parent}{/ifset}{/block}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{$site_description}">
+    <meta name="author" content="{$site_author}">
+    {ifset $tags}<meta name="keywords" content="{$tags}">{/ifset}
+    <link rel="canonical" href="{$site_url}/{$post['relativeUrl']}/">
 
-{block content}
-    <!-- Facebook stuff -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1715191915471013";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+    <title>
+        {$title} | {$site_name}
+    </title>
 
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="post-heading">
-                        <a href="/blog">&larr; Go back</a>
-                        <h1>{block post_title}{$post['title']}{/block}</h1>
-                        {ifset $post}<span class="meta">{include 'record_meta', 'post' => $post}</span>{/ifset}
-                    </div>
+    {include '_snippets/blog_css.latte'}
+</head>
+<body>
+
+{include '_snippets/menu.latte'}
+
+<!-- Facebook stuff -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1715191915471013";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <a href="/blog">&larr; Go back</a>
+                    <h1>{block post_title}{$post['title']}{/block}</h1>
+                    <span class="meta">{include '_snippets/record_meta.latte', 'post' => $post}</span>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- Post Content -->
-    <article>
-        <div class="container">
-            <div id="article-body" class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {block post_content}{$post['content']|noescape}{/block}
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div id="article-body" class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {block post_content}{$post['content']|noescape}{/block}
+            </div>
+        </div>
+
+        <!-- Social media share buttons -->
+        <aside class="row" style="margin-bottom: 20px;">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {var $relatedPosts = ($post|relatedItems)}
+                <div n:if="count($relatedPosts)">
+                    <strong>Related Posts</strong>
+                    <ul>
+                        {foreach $relatedPosts as $similarPost}
+                            <li>
+                                <a href="/{$similarPost['relativeUrl']}">{$similarPost['title']}</a>
+                            </li>
+                        {/foreach}
+                    </ul>
                 </div>
             </div>
+        </aside>
 
-            <!-- Social media share buttons -->
-            {ifset $post}
-                <aside class="row" style="margin-bottom: 20px;">
-                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        {var $relatedPosts = ($post|relatedPosts)}
-                        <div n:if="count($relatedPosts)">
-                            <strong>Related Posts</strong>
-                            <ul>
-                                {foreach $relatedPosts as $similarPost}
-                                    <li>
-                                        <a href="/{$similarPost['relativeUrl']}">{$similarPost['title']}</a>
-                                    </li>
-                                {/foreach}
-                            </ul>
-                        </div>
-                    </div>
-                </aside>
+        <section id="social-buttons" class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="fb-like" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
 
-                <section id="social-buttons" class="row">
-                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <div class="fb-like" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
-
-                        <a href="https://twitter.com/share" class="twitter-share-button" data-via="ikvasnica" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="ikvasnica" data-dnt="true" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-                        <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-                        <script type="IN/Share"></script>
+                <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                <script type="IN/Share"></script>
 
-                        <!-- Facebook button align hack -->
-                        <style media="screen" type="text/css">
-                            .fb_iframe_widget span
-                            {
-                                vertical-align: baseline !important;
-                            }
-                        </style>
-                    </div>
-                </section>
-            {/ifset}
-        </div>
-    </article>
+                <!-- Facebook button align hack -->
+                <style media="screen" type="text/css">
+                    .fb_iframe_widget span
+                    {
+                        vertical-align: baseline !important;
+                    }
+                </style>
+            </div>
+        </section>
+    </div>
+</article>
 
-    {ifset $post}
-        {include '_snippets/author_info.latte'}
+{include '_snippets/author_info.latte'}
 
-        {if !isset($post['noComments'])}
-            {include '_snippets/disqus.latte', 'post' => $post}
-        {/if}
-    {/ifset}
-{/block}
+{if !isset($post['noComments'])}
+    {include '_snippets/disqus.latte', 'post' => $post}
+{/if}
+
+{include '_snippets/blog_footer.latte'}
+
+</body>
+
+</html>
