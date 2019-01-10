@@ -1,45 +1,43 @@
 ---
-layout: blog_index
-title: "Ivan writes here."
+layout: "_layouts/blog_index.latte"
+title: "Ivan writes here"
 ---
 
-{block content}
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1>{$title}</h1>
-                        <hr class="small">
-                        <span class="subheading">{$site_name}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-
-                {foreach $posts as $post}
-
-                    <div class="post-preview">
-                        <a href="/{$post['relativeUrl']}/">
-                            <h2 class="post-title">
-                                {$post['title']}
-                            </h2>
-                        </a>
-                        <p class="post-meta">{include 'record_meta', 'post' => $post}</p>
-                    </div>
-                    <hr>
-
-                {/foreach}
-
+                <div class="site-heading">
+                    <h1>{$title}</h1>
+                    <hr class="small">
+                    <span class="subheading">{$site_name}</span>
+                </div>
             </div>
         </div>
     </div>
-{/block}
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+            {foreach $posts as $post}
+
+                <div class="post-preview">
+                    <a href="/{$post['relativeUrl']}/">
+                        <h2 class="post-title">
+                            {$post['title']}
+                        </h2>
+                    </a>
+                    <p class="post-meta">{include '_snippets/record_meta.latte', 'post' => $post}</p>
+                </div>
+                <hr>
+
+            {/foreach}
+
+        </div>
+    </div>
+</div>

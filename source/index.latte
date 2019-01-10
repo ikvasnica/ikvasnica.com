@@ -1,10 +1,9 @@
----
-layout: default
+I'm---
+layout: "_layouts/default.latte"
 ---
 
-{block content}
-  <header class="jumbotron">
-  <div id="heading-row" class="row center-block">
+<header class="jumbotron">
+<div id="heading-row" class="row center-block">
 
     <div class="col-md-2 col-md-offset-3 hidden-xs hidden-sm vertical-center">
       <div id="jumbotron-picture" class="no-show img-circle img-responsive"></div>
@@ -22,169 +21,174 @@ layout: default
     </article>
   </div>
 
-  <div class="row">
-    <div class="col-md-2 col-md-offset-4 col-sm-3 col-sm-offset-3 col-xs-4 col-xs-offset-2 top-spacing">
-      <a href="#contact" id="trial-btn" class="btn btn-lg btn-primary" role="button" data-toggle="tooltip" data-placement="top" title="Go to the contact information">Sounds great!</a>
-    </div>
-    <div class="col-md-2 col-sm-3 col-xs-4 top-spacing">
-      <a href="https://ikvasnica.com/blog/" id="blog-btn" class="btn btn-lg btn-default" role="button" data-toggle="tooltip" data-placement="top" title="Personal blog about web development">Read my blog</a>
-    </div>
-  </div>
+<div class="row">
+  <article class="col-md-6 col-md-offset-3 standard top-spacing">
+    <p>I help people to find jobs they will love with <a href="http://www.lmc.eu" target="_blank">LMC</a> in Prague, Czech Republic. I developed an user login system, API and a redesigned website for <a href="http://www.iprima.cz" target="_blank">TV Prima</a>. I organized <a href="https://www.facebook.com/groups/englishinbrno/" target="_blank">international events</a> and wrote <a href="http://www.zive.sk/profil-autora/469/ivan-kvasnica" target="_blank">hundreds of articles on IT topics</a>.</p>
+  </article>
+</div>
 
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3 col-sm-offset-3 col-sm-6 text-center links-row hidden-xs">
-      <p>
-        <a href="#features" data-toggle="tooltip" data-placement="top" title="What I can do and what I am looking for">Features</a>&nbsp;
-        <a href="#projects" data-toggle="tooltip" data-placement="top" title="My portfolio">Projects</a>&nbsp;
-        <a href="#references" data-toggle="tooltip" data-placement="top" title="Recommendations from people I have met">References</a>
-      </p>
-    </div>
+<div class="row">
+  <div class="col-md-2 col-md-offset-4 col-sm-3 col-sm-offset-3 col-xs-4 col-xs-offset-2 top-spacing">
+    <a href="#contact" id="trial-btn" class="btn btn-lg btn-primary" role="button" data-toggle="tooltip" data-placement="top" title="Go to the contact information">Sounds great!</a>
   </div>
+  <div class="col-md-2 col-sm-3 col-xs-4 top-spacing">
+    <a href="https://ikvasnica.com/blog/" id="blog-btn" class="btn btn-lg btn-default" role="button" data-toggle="tooltip" data-placement="top" title="Personal blog about web development">Read my blog</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 col-sm-offset-3 col-sm-6 text-center links-row hidden-xs">
+    <p>
+      <a href="#features" data-toggle="tooltip" data-placement="top" title="What I can do and what I am looking for">Features</a>&nbsp;
+      <a href="#projects" data-toggle="tooltip" data-placement="top" title="My portfolio">Projects</a>&nbsp;
+      <a href="#references" data-toggle="tooltip" data-placement="top" title="Recommendations from people I have met">References</a>
+    </p>
+  </div>
+</div>
 
 </header>
 
 <section id="projects" class="colorful">
 
-  <div class="container colorful">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Three cool projects built by me.</h2>
+<div class="container colorful">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Three cool projects built by me.</h2>
+    </div>
+  </div>
+
+  <div class="row top-spacing">
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail no-opacity colorful">
+        <img src="/img/thumbnail1.png" class="thumbnail-picture" alt="Prima Auth">
+        <div class="caption standard no-opacity no-show">
+          <h3>Prima Auth</h3>
+          <p class="sidenote">Symfony, Doctrine, oAuth2, RESTful API, PHPUnit</p>
+          <p>TV Prima's user management, local and third party login system and user API used on the website with around <span>2,5 million visitors monthly</span>. The project has <span>a robust backend part</span> written in Symfony, but also the frontend part for users and the administration area.</p>
+        </div>
+        <p class="thumbnail-buttons top-spacing-small no-show">
+          <a href="https://auth.iprima.cz" target="_blank" class="btn btn-default" role="button"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Live</a>
+        </p>
       </div>
     </div>
 
-    <div class="row top-spacing">
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail no-opacity colorful">
-          <img src="/img/thumbnail1.png" class="thumbnail-picture" alt="Prima Auth">
-          <div class="caption standard no-opacity no-show">
-            <h3>Prima Auth</h3>
-            <p class="sidenote">Symfony, Doctrine, oAuth2, RESTful API, PHPUnit</p>
-            <p>TV Prima's user management, local and third party login system and user API used on the website with around <span>2,5 million visitors monthly</span>. The project has <span>a robust backend part</span> written in Symfony, but also the frontend part for users and the administration area.</p>
-          </div>
-          <p class="thumbnail-buttons top-spacing-small no-show">
-            <a href="https://auth.iprima.cz" target="_blank" class="btn btn-default" role="button"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Live</a>
-          </p>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail no-opacity colorful">
+        <img src="/img/thumbnail2.jpg" class="thumbnail-picture" alt="Translation System thumbnail picture">
+        <div class="caption standard no-opacity no-show">
+          <h3>Translation System</h3>
+          <p class="sidenote">PHP, js/jQuery, AJAX, MySQL</p>
+          <p>A brand new internal translation system which will be integrated with the current Asimut system, <span>used by leading schools</span> of performing arts from all over the world. User can benefit from <span>an intuitive and easy-to-use user interface</span>, including keyboard shortcuts, sorting, intelligent importing and input handling, saving to the database through AJAX and exporting translations into the live system only <span>by one click</span>.</p>
         </div>
       </div>
+    </div>
 
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail no-opacity colorful">
-          <img src="/img/thumbnail2.jpg" class="thumbnail-picture" alt="Translation System thumbnail picture">
-          <div class="caption standard no-opacity no-show">
-            <h3>Translation System</h3>
-            <p class="sidenote">PHP, js/jQuery, AJAX, MySQL</p>
-            <p>A brand new internal translation system which will be integrated with the current Asimut system, <span>used by leading schools</span> of performing arts from all over the world. User can benefit from <span>an intuitive and easy-to-use user interface</span>, including keyboard shortcuts, sorting, intelligent importing and input handling, saving to the database through AJAX and exporting translations into the live system only <span>by one click</span>.</p>
-          </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail no-opacity colorful">
+        <img src="/img/thumbnail3.png" class="thumbnail-picture" alt="Infinity Gallery">
+        <div class="caption standard no-opacity no-show">
+          <h3>Infinity Gallery</h3>
+          <p class="sidenote">PHP, MySQL, Bootstrap, custom framework</p>
+          <p>A prototype website made as <span>a student group project</span>. I worked mostly on the backend part, which uses a basic <span>custom PHP framework</span> written from scratch. <span>I learnt about routing, MVC pattern</span> and later it helped me a lot in understanding the Symfony Framework.</p>
         </div>
-      </div>
-
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail no-opacity colorful">
-          <img src="/img/thumbnail3.png" class="thumbnail-picture" alt="Infinity Gallery">
-          <div class="caption standard no-opacity no-show">
-            <h3>Infinity Gallery</h3>
-            <p class="sidenote">PHP, MySQL, Bootstrap, custom framework</p>
-            <p>A prototype website made as <span>a student group project</span>. I worked mostly on the backend part, which uses a basic <span>custom PHP framework</span> written from scratch. <span>I learnt about routing, MVC pattern</span> and later it helped me a lot in understanding the Symfony Framework.</p>
-          </div>
-          <p class="thumbnail-buttons top-spacing-small no-show">
-            <a href="http://showcase.jexpo.dk/infinityproject/" target="_blank" class="btn btn-default" role="button"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Live</a>
-            <a href="https://github.com/jespardk/projekt32" target="_blank" class="btn btn-default" role="button"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;GitHub</a>
-          </p>
-        </div>
+        <p class="thumbnail-buttons top-spacing-small no-show">
+          <a href="http://showcase.jexpo.dk/infinityproject/" target="_blank" class="btn btn-default" role="button"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Live</a>
+          <a href="https://github.com/jespardk/projekt32" target="_blank" class="btn btn-default" role="button"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;GitHub</a>
+        </p>
       </div>
     </div>
   </div>
+</div>
 </section>
 
 <section id="features" class="standard">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Features. (No, no bugs, I promise!)</h2>
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Features. (No, no bugs, I promise!)</h2>
     </div>
-
-    <div class="row top-spacing-small">
-      <div class="col-md-6 right-padding">
-        <h3 class='text-uppercase'><strong class="glyphicon glyphicon-fullscreen" aria-hidden="true"></strong> Rich functionality</h3>
-        <p><strong>PHP (Symfony Framework), JavaScript (jQuery), MySQL/PostgreSQL/Doctrine ORM</strong>, HTML5, CSS3, Bootstrap 3, Git, Bash scripting, oAuth2,... - you name it and I have been using it or at least was passing by.</p>
-      </div>
-
-      <div class="col-md-6 left-padding">
-        <h3 class='text-uppercase'><strong class="glyphicon glyphicon-user" aria-hidden="true"></strong> User friendly</h3>
-        <p>People describe me as a <strong>highly motivated and responsible person</strong>. I have strong writing and communication skills thanks to my background in journalism, public speaking and organizing social events.</p>
-      </div>
-    </div>
-
-    <div class="row top-spacing-small">
-      <div class="col-md-6 right-padding">
-        <h3 class='text-uppercase'><strong class="glyphicon glyphicon-wrench" aria-hidden="true"></strong> Customizable</h3>
-        <p><strong>I am eager to learn.</strong> I enjoy working for companies where I can gain new skills and be helpful as much as possible. <strong>No boring office jobs with repetitive tasks, please.</strong></p>
-      </div>
-
-      <div class="col-md-6 left-padding">
-        <h3 class='text-uppercase'><strong class="glyphicon glyphicon-ok" aria-hidden="true"></strong> Tested</h3>
-        <p>I have already a broad <strong>professional and volunteering experience</strong>. Okay, I might be telling you fairytales about myself, but you know what? You can easily find out <a href="#references">what others think</a> about me and my work.</p>
-      </div>
-    </div>
-
   </div>
+
+  <div class="row top-spacing-small">
+    <div class="col-md-6 right-padding">
+      <h3 class='text-uppercase'><strong class="glyphicon glyphicon-fullscreen" aria-hidden="true"></strong> Rich functionality</h3>
+      <p><strong>PHP (Symfony Framework), JavaScript (jQuery), MySQL/PostgreSQL/Doctrine ORM</strong>, HTML5, CSS3, Bootstrap 3, Git, Bash scripting, oAuth2,... - you name it and I have been using it or at least was passing by.</p>
+    </div>
+
+    <div class="col-md-6 left-padding">
+      <h3 class='text-uppercase'><strong class="glyphicon glyphicon-user" aria-hidden="true"></strong> User friendly</h3>
+      <p>People describe me as a <strong>highly motivated and responsible person</strong>. I have strong writing and communication skills thanks to my background in journalism, public speaking and organizing social events.</p>
+    </div>
+  </div>
+
+  <div class="row top-spacing-small">
+    <div class="col-md-6 right-padding">
+      <h3 class='text-uppercase'><strong class="glyphicon glyphicon-wrench" aria-hidden="true"></strong> Customizable</h3>
+      <p><strong>I am eager to learn.</strong> I enjoy working for companies where I can gain new skills and be helpful as much as possible. <strong>No boring office jobs with repetitive tasks, please.</strong></p>
+    </div>
+
+    <div class="col-md-6 left-padding">
+      <h3 class='text-uppercase'><strong class="glyphicon glyphicon-ok" aria-hidden="true"></strong> Tested</h3>
+      <p>I have already a broad <strong>professional and volunteering experience</strong>. Okay, I might be telling you fairytales about myself, but you know what? You can easily find out <a href="#references">what others think</a> about me and my work.</p>
+    </div>
+  </div>
+
+</div>
 
 </section>
 
 
 <section id="references" class="colorful">
 
-  <div class="container colorful">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>What users say.</h2>
-      </div>
-    </div>
-
-    <div class="row top-spacing">
-      <div class="col-md-2 col-xs-12">
-        <img class="media-object img-circle img-responsive center-block" src="/img/person3.jpg" alt="Mads Skovbjerg Paldam">
-      </div>
-      <div class="col-md-10 col-xs-12">
-        <p class="quotation">Ivan has been a reliable and motivated employee who has performed several programming tasks for us, including a complete independent subsystem to manage our translations. ... He has worked independently on this project, and has completed it to our great satisfaction - it is now in use and has already helped us improve our workflows.</p>
-        <p class="signature"><strong>Mads Skovbjerg Paldam</strong>, CEO and Founder, <span data-toggle="tooltip" data-placement="top" title="ASIMUT is a complex ERP solution for schools of performing arts, translated into 10+ languages">ASIMUT software ApS</span></p>
-      </div>
-
-    </div>
-
-    <div class="row top-spacing">
-      <div class="col-md-2 col-xs-12">
-
-      </div>
-      <div class="col-md-10 col-xs-12">
-        <p class="quotation">Ivan is a reliable, enthusiastic, highly motivated person, with the ability to work hard and under stress if needed. As a journalist, he was able to cover broad spectre of topics precisely on a daily basis. He had gained a lot of skills including copywriting, using various software technologies and social media management. Many external correspondents of our magazines gained their skills thanks to Ivan's editorship and mentoring.</p>
-        <p class="signature"><strong>Filip Hanker</strong>, Editor-in-chief, <span data-toggle="tooltip" data-placement="top" title="The most popular technology magazines in Slovakia, where I was working between 2007 - 2014">Živé.sk and MobilMania.sk</span></p>
-      </div>
-
-    </div>
-
-    <div class="row top-spacing">
-      <div class="col-md-2 col-xs-12">
-        <img class="media-object img-circle img-responsive center-block" src="/img/person2.jpg" alt="Ondřej Žižka">
-      </div>
-      <div class="col-md-10 col-xs-12">
-        <p class="quotation">Ivan is a person one would like to have as a co-worker. He's reliable, intelligent, original and inventive. It has always been a pleasure to cooperate with him.</p>
-        <p class="signature"><strong>Ondřej Žižka</strong>, JBoss Developer, Red Hat & co-organizer of <span data-toggle="tooltip" data-placement="top" title="I had been organizing international social events in Brno, Czech Republic, for over one year.">English Meetings</span></p>
-      </div>
-
-    </div>
-
-    <div class="row top-spacing">
-      <div class="col-md-2 col-xs-12">
-        <!-- <img class="media-object img-circle img-responsive center-block" src="/img/person3.jpg" alt=""> -->
-      </div>
-      <div class="col-md-10 col-xs-12">
-        <p class="quotation">I know him as a responsible, hard-working and keen student, interested in various subjects and sciences, an eruditely young man. Ivan is also very reliable in any situation, can cope with stress and unexpected issues, helpful and patient towards the others. That is why he has always been respected among his classmates and teachers as well.</p>
-        <p class="signature"><strong>PhDr. Jana Komorová</strong>, class teacher, <span data-toggle="tooltip" data-placement="top" title="Secondary grammar school in Slovakia where I was studying.">Gymnázium Púchov</span></p>
-      </div>
-
+<div class="container colorful">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>What users say.</h2>
     </div>
   </div>
+
+  <div class="row top-spacing">
+    <div class="col-md-2 col-xs-12">
+      <img class="media-object img-circle img-responsive center-block" src="/img/person3.jpg" alt="Mads Skovbjerg Paldam">
+    </div>
+    <div class="col-md-10 col-xs-12">
+      <p class="quotation">Ivan has been a reliable and motivated employee who has performed several programming tasks for us, including a complete independent subsystem to manage our translations. ... He has worked independently on this project, and has completed it to our great satisfaction - it is now in use and has already helped us improve our workflows.</p>
+      <p class="signature"><strong>Mads Skovbjerg Paldam</strong>, CEO and Founder, <span data-toggle="tooltip" data-placement="top" title="ASIMUT is a complex ERP solution for schools of performing arts, translated into 10+ languages">ASIMUT software ApS</span></p>
+    </div>
+
+  </div>
+
+  <div class="row top-spacing">
+    <div class="col-md-2 col-xs-12">
+
+    </div>
+    <div class="col-md-10 col-xs-12">
+      <p class="quotation">Ivan is a reliable, enthusiastic, highly motivated person, with the ability to work hard and under stress if needed. As a journalist, he was able to cover broad spectre of topics precisely on a daily basis. He had gained a lot of skills including copywriting, using various software technologies and social media management. Many external correspondents of our magazines gained their skills thanks to Ivan's editorship and mentoring.</p>
+      <p class="signature"><strong>Filip Hanker</strong>, Editor-in-chief, <span data-toggle="tooltip" data-placement="top" title="The most popular technology magazines in Slovakia, where I was working between 2007 - 2014">Živé.sk and MobilMania.sk</span></p>
+    </div>
+
+  </div>
+
+  <div class="row top-spacing">
+    <div class="col-md-2 col-xs-12">
+      <img class="media-object img-circle img-responsive center-block" src="/img/person2.jpg" alt="Ondřej Žižka">
+    </div>
+    <div class="col-md-10 col-xs-12">
+      <p class="quotation">Ivan is a person one would like to have as a co-worker. He's reliable, intelligent, original and inventive. It has always been a pleasure to cooperate with him.</p>
+      <p class="signature"><strong>Ondřej Žižka</strong>, JBoss Developer, Red Hat & co-organizer of <span data-toggle="tooltip" data-placement="top" title="I had been organizing international social events in Brno, Czech Republic, for over one year.">English Meetings</span></p>
+    </div>
+
+  </div>
+
+  <div class="row top-spacing">
+    <div class="col-md-2 col-xs-12">
+      <!-- <img class="media-object img-circle img-responsive center-block" src="/img/person3.jpg" alt=""> -->
+    </div>
+    <div class="col-md-10 col-xs-12">
+      <p class="quotation">I know him as a responsible, hard-working and keen student, interested in various subjects and sciences, an eruditely young man. Ivan is also very reliable in any situation, can cope with stress and unexpected issues, helpful and patient towards the others. That is why he has always been respected among his classmates and teachers as well.</p>
+      <p class="signature"><strong>PhDr. Jana Komorová</strong>, class teacher, <span data-toggle="tooltip" data-placement="top" title="Secondary grammar school in Slovakia where I was studying.">Gymnázium Púchov</span></p>
+    </div>
+
+  </div>
+</div>
 </section>
-{/block}

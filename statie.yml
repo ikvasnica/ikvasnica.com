@@ -1,5 +1,5 @@
 imports:
-    - { resource: "source/_data/menu.yml" }
+    - { resource: "source/_data/menu.yaml" }
 
 parameters:
     site_url: https://ikvasnica.com

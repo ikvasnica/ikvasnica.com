@@ -43,11 +43,11 @@
             {ifset $post}
                 <aside class="row" style="margin-bottom: 20px;">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        {var $similarPosts = ($post|similarPosts)}
-                        <div n:if="count($similarPosts)">
+                        {var $relatedPosts = ($post|relatedPosts)}
+                        <div n:if="count($relatedPosts)">
                             <strong>Related Posts</strong>
                             <ul>
-                                {foreach $similarPosts as $similarPost}
+                                {foreach $relatedPosts as $similarPost}
                                     <li>
                                         <a href="/{$similarPost['relativeUrl']}">{$similarPost['title']}</a>
                                     </li>
@@ -81,10 +81,10 @@
     </article>
 
     {ifset $post}
-        {include 'author_info'}
+        {include '_snippets/author_info.latte'}
 
         {if !isset($post['noComments'])}
-            {include 'disqus', 'post' => $post}
+            {include '_snippets/disqus.latte', 'post' => $post}
         {/if}
     {/ifset}
 {/block}
