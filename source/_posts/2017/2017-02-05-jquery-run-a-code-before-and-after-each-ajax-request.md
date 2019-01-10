@@ -1,6 +1,5 @@
 ---
 id: 7
-layout: post
 title: "jQuery: Run a code before and after each AJAX request"
 tags: "jQuery, JavaScript, AJAX"
 ---

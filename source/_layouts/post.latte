@@ -1,4 +1,4 @@
-{extends 'blog_index'}
+{extends '_layouts/blog_index.latte'}
 
 {block canonical_url}{ifset $post}{$site_url}/{$post['relativeUrl']}/{else}{include #parent}{/ifset}{/block}
 

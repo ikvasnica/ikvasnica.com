@@ -1,6 +1,5 @@
 ---
 id: 3
-layout: post
 title: "I'm moving from Mac to Windows as a web developer"
 tags: "Windows, web development, PHP, OS X, Mac, tools"
 related_posts: [1]

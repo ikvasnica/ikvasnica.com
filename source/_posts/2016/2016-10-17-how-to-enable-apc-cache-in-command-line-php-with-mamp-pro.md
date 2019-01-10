@@ -1,6 +1,5 @@
 ---
 id: 1
-layout: post
 title: "How to enable PHP APC cache in command line with MAMP"
 tags: "MAMP, OS X, Mac, Apple, PHP, localhost, APC, cache, bash, shell"
 related_posts: [2,3]

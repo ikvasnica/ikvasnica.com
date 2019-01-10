@@ -1,6 +1,5 @@
 ---
 id: 8
-layout: post
 title: "How to rehash legacy passwords in Symfony"
 tags: "Symfony, PHP, security, password, hash"
 noComments: true
