@@ -6,4 +6,8 @@ parameters:
     site_name: "PHP & Symfony Tips"
     site_description: "PHP, Symfony, programming tips and tricks by Ivan Kvasnica."
     site_author: "Ivan Kvasnica"
-#    post_route: "blog/:title"
+
+    # see https://www.statie.org/docs/generators/
+    generators:
+        posts:
+            route_prefix: "blog"
