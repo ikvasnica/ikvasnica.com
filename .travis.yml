@@ -18,14 +18,18 @@ env:
         # And add it there; like you do when you want to run tests on some repository
         - secure: aSQZy7elP8yXbjtBBg9s1p5wbTfMAUHbwI+WbXwQkysSDQVbtzCwGTz7YPiGPYYFdQ8IrKw2T9nYeGOw8DvB54Vd7USZcWUWJ+3nAC3V1u+Sb0UotwB47yc1G4c4lGlWehsbf0EveO+EOpT4pbk5CxCxkz4l2MK0tEB+bfDAwIjMgsuRSyTqe+dgfaWr6/EcyYIVMkSXJETR338idjsAK3h/KVrAcnUIYSqbH8+LWr8JMoqnpIyoTbgLjuU4v1Nj9sAD1J7jUR37Rfj72Z6djY+h4FbCg/gGPfzKxIa9G1658av50sDeuTpfCPPtNltKQr74JUk5vMKDcj0PKbIq4/PcQ+7nphEQ5UsdPe0XMl/PUHNy8AR3ckr1hLrHRgha1nd5m8IuLh2ll+nvmJmavJtqTtI0NwnHWbYCgKnc22cLqmydIffl8dZnunlCDJMvPEmNdvRmALGhOr3Oncky5E9t4JqRruF2li2i7iyEwhaY/bRO0abTjdT+l8+RMuw187PerSIvYYddGQXN5vdG9VkybX4/0aKjZYJNEKC8ALFAKy0Tu+OK1oVyFZgfzA2H2U7XQTvKDAhesDuP6aaicUXsPmuUMOd152JJ4loOIiwNB4501hTEgbGhJCQAkN9UbPKfCYAqE74mkNInJ2siieV/Gv9JHIM6zoroiQ8nTHw=
 
-before_script:
-    - composer update
+install:
+    - composer install
 
 script:
     # test that website is generated
     - vendor/bin/statie generate source
-    # re-build website when on master only
-    - |
-      if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-          vendor/bin/statie push-to-github ikvasnica/ikvasnica.com --token=${GH_TOKEN}
-      fi
+
+# see docs: https://www.statie.org/docs/github-pages/
+deploy:
+    provider: pages
+    skip_cleanup: true
+    github_token: $GH_TOKEN
+    on:
+        branch: master
+    local_dir: output
