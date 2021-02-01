@@ -1,9 +1,0 @@
-includes:
-    - source/_data/menu.neon
-parameters:
-    site_url: https://ikvasnica.com
-    site_name: "PHP & Symfony Tips"
-    site_description: "PHP, Symfony, programming tips and tricks by Ivan Kvasnica."
-    site_author: "Ivan Kvasnica"
-    post_route: "blog/:title"
-    amp: true
